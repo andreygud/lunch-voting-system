@@ -31,5 +31,6 @@ public class VoteControllerTest {
     @Test
     public void vote() {
         voteController.vote(new Object());
+        //coment
     }
 }
