@@ -1,5 +1,6 @@
 package com.gudilov.lunchvotingsystem.web;
 
+import com.gudilov.lunchvotingsystem.VoteTestData;
 import com.gudilov.lunchvotingsystem.dto.VoteResult;
 import com.gudilov.lunchvotingsystem.exceptions.BusinessRuleViolationException;
 import org.assertj.core.api.Assertions;
@@ -30,7 +31,7 @@ public class VoteControllerTest {
     @Test
     public void getVotingResults_sortByRestaurantName_success() {
         List<VoteResult> votes = voteController.getVotingResults();
-        Assertions.assertThat(votes).usingFieldByFieldElementComparator().isEqualTo(VoteTestData.VOTES_SORTED);
+        Assertions.assertThat(votes).usingFieldByFieldElementComparator().isEqualTo(VoteTestData.VOTE_RESULTS_SORTED);
     }
 
     @Test
@@ -40,7 +41,7 @@ public class VoteControllerTest {
                 .filter( voteResult -> Objects.equals(voteResult.getRestaurantID(),VoteTestData.RESTAURANT_ID1))
                 .findFirst().orElse(null);
 
-        assertEquals(1,result.getVotesNumber());
+        assertEquals(1L,result.getVotesNumber().longValue());
     }
 
     @Test(expected = BusinessRuleViolationException.class)
@@ -52,7 +53,7 @@ public class VoteControllerTest {
     @Test
     public void vote_2ndVoteRestaurantChangeBefore1100_success() {
 
-        int before = voteController.getVotingResults().stream().mapToInt(VoteResult::getVotesNumber).sum();
+        Long before = voteController.getVotingResults().stream().mapToLong(VoteResult::getVotesNumber).sum();
 
         //todo: setTime to 9:00
         voteController.vote(VoteTestData.RESTAURANT_ID1);
@@ -60,7 +61,7 @@ public class VoteControllerTest {
         voteController.vote(VoteTestData.RESTAURANT_ID1 + 1);
 
         //check total number of votes stays the same, vote moves from one restaurant to another.
-        int after = voteController.getVotingResults().stream().mapToInt(VoteResult::getVotesNumber).sum();
+        Long after = voteController.getVotingResults().stream().mapToLong(VoteResult::getVotesNumber).sum();
         assertEquals(before,after);
     }
 

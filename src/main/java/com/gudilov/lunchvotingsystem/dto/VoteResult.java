@@ -1,18 +1,14 @@
 package com.gudilov.lunchvotingsystem.dto;
 
-import java.time.LocalDateTime;
-
 public class VoteResult {
 
     private int restaurantID;
     private String restaurantName;
-    private LocalDateTime timestamp;
-    private int votesNumber;
+    private Long votesNumber;
 
-    public VoteResult(int restaurantID, String restaurantName, LocalDateTime timestamp, int votesNumber) {
+    public VoteResult(int restaurantID, String restaurantName, Long votesNumber) {
         this.restaurantID = restaurantID;
         this.restaurantName = restaurantName;
-        this.timestamp = timestamp;
         this.votesNumber = votesNumber;
     }
 
@@ -32,19 +28,11 @@ public class VoteResult {
         this.restaurantName = restaurantName;
     }
 
-    public LocalDateTime getTimestamp() {
-        return timestamp;
-    }
-
-    public void setTimestamp(LocalDateTime timestamp) {
-        this.timestamp = timestamp;
-    }
-
-    public int getVotesNumber() {
+    public Long getVotesNumber() {
         return votesNumber;
     }
 
-    public void setVotesNumber(int votesNumber) {
+    public void setVotesNumber(Long votesNumber) {
         this.votesNumber = votesNumber;
     }
 }
