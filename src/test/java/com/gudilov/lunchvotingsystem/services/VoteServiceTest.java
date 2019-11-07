@@ -3,6 +3,7 @@ package com.gudilov.lunchvotingsystem.services;
 import com.gudilov.lunchvotingsystem.UserTestData;
 import com.gudilov.lunchvotingsystem.VoteTestData;
 import org.assertj.core.api.Assertions;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -23,13 +24,21 @@ public class VoteServiceTest {
     @Autowired
     private VoteService voteService;
 
+    @Autowired
+    private RestaurantService restaurantService;
+
     @Before
-    public void setUp() throws Exception {
+    public void setUp(){
     }
 
     @Test
     public void vote() {
-        throw new IllegalArgumentException();
+
+        int before = voteService.getTodaysSummaryByRestaurant(UserTestData.USER1).get(VoteTestData.RESTAURANT_ID1).intValue();
+        voteService.vote(VoteTestData.RESTAURANT_ID1,UserTestData.USER1);
+        int after = voteService.getTodaysSummaryByRestaurant(UserTestData.USER1).get(VoteTestData.RESTAURANT_ID1).intValue();
+        Assert.assertEquals(before+1,after);
+
     }
 
     @Test

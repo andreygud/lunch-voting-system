@@ -1,7 +1,5 @@
 package com.gudilov.lunchvotingsystem.model;
 
-import javax.persistence.*;
-
 public abstract class AbstractBaseEntity {
 
     protected Integer id;
