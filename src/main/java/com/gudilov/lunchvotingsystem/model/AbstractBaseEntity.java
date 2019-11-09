@@ -1,7 +1,16 @@
 package com.gudilov.lunchvotingsystem.model;
 
-public abstract class AbstractBaseEntity {
+import org.springframework.data.domain.Persistable;
 
+import javax.persistence.*;
+
+
+@MappedSuperclass
+@Access(AccessType.FIELD)
+public abstract class AbstractBaseEntity  implements Persistable<Integer> {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     protected Integer id;
 
     protected AbstractBaseEntity() {

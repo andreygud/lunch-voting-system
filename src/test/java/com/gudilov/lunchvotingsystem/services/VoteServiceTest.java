@@ -9,41 +9,39 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.jdbc.Sql;
+import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.Map;
 
 
 @ContextConfiguration({
-        "classpath:spring/spring-app.xml",
-        "classpath:spring/spring-mock-rep.xml"
+        "classpath:spring/spring-app.xml"
 })
-@RunWith(SpringJUnit4ClassRunner.class)
+@RunWith(SpringRunner.class)
+@Sql("/db/populateDB.sql")
 public class VoteServiceTest {
 
     @Autowired
     private VoteService voteService;
-
-    @Autowired
-    private RestaurantService restaurantService;
 
     @Before
     public void setUp(){
     }
 
     @Test
-    public void vote() {
-
-        int before = voteService.getTodaysSummaryByRestaurant(UserTestData.USER1).get(VoteTestData.RESTAURANT_ID1).intValue();
-        voteService.vote(VoteTestData.RESTAURANT_ID1,UserTestData.USER1);
-        int after = voteService.getTodaysSummaryByRestaurant(UserTestData.USER1).get(VoteTestData.RESTAURANT_ID1).intValue();
-        Assert.assertEquals(before+1,after);
-
+    public void getAllToday(){
+        Map<String,Integer> today_result = voteService.getTodayResults();
+        Assertions.assertThat(today_result).containsAllEntriesOf(VoteTestData.INITIAL_VOTES);
     }
 
     @Test
-    public void getTodaysSummaryByRestaurant() {
-        Map<Integer, Long> map = voteService.getTodaysSummaryByRestaurant(UserTestData.USER1);
-        Assertions.assertThat(map).containsAllEntriesOf(VoteTestData.RESTAURANT_SUMMARY);
+    public void vote() {
+        int before = voteService.getTodayResults().get(VoteTestData.RESTAURANT_JOES);
+        voteService.vote(VoteTestData.RESTAURANT_JOES,UserTestData.USER5);
+        int after = voteService.getTodayResults().get(VoteTestData.RESTAURANT_JOES);
+
+        Assert.assertEquals(before+1,after);
     }
+
 }

@@ -1,37 +1,48 @@
 package com.gudilov.lunchvotingsystem.model;
 
+import javax.persistence.Entity;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 
+@Entity
 public class Vote extends AbstractBaseEntity{
 
-    private int restaurantID;
-    private LocalDateTime timestamp;
+    private String restaurantID;
+
+    private LocalDateTime votingtime;
+
+    @NotNull
     private int userId;
 
-    public Vote(Integer id, int restaurantID, LocalDateTime timestamp, int userId) {
+    public Vote(String restaurantID, LocalDateTime votingtime, int userId) {
+        this(null,restaurantID, votingtime,userId);
+    }
+
+    public Vote(Integer id, String restaurantID, LocalDateTime votingtime, int userId) {
         super(id);
         this.restaurantID = restaurantID;
-        this.timestamp = timestamp;
+        this.votingtime = votingtime;
         this.userId = userId;
     }
 
     public Vote() {
+        super();
     }
 
-    public int getRestaurantID() {
+    public String getRestaurantID() {
         return restaurantID;
     }
 
-    public void setRestaurantID(int restaurantID) {
+    public void setRestaurantID(String restaurantID) {
         this.restaurantID = restaurantID;
     }
 
-    public LocalDateTime getTimestamp() {
-        return timestamp;
+    public LocalDateTime getVotingtime() {
+        return votingtime;
     }
 
-    public void setTimestamp(LocalDateTime timestamp) {
-        this.timestamp = timestamp;
+    public void setVotingtime(LocalDateTime timestamp) {
+        this.votingtime = timestamp;
     }
 
     public int getUserId() {

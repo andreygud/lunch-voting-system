@@ -1,17 +1,13 @@
 package com.gudilov.lunchvotingsystem.web;
 
 import com.gudilov.lunchvotingsystem.dto.VoteResult;
-import com.gudilov.lunchvotingsystem.model.Restaurant;
 import com.gudilov.lunchvotingsystem.services.AuthorizationService;
 import com.gudilov.lunchvotingsystem.services.RestaurantService;
 import com.gudilov.lunchvotingsystem.services.VoteService;
-import org.springframework.stereotype.Controller;
 
 import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
 
-@Controller
+
 public class VoteController {
 
     private AuthorizationService authorizationService;
@@ -26,7 +22,7 @@ public class VoteController {
 
     public List<VoteResult> getVotingResults() {
 
-        int userId = authorizationService.getAuthUserId();
+ /*       int userId = authorizationService.getAuthUserId();
 
         List<Restaurant> restaurants = restaurantService.getAll(userId);
 
@@ -38,10 +34,11 @@ public class VoteController {
                                 restaurant.getId(),
                                 restaurant.getRestaurantName(),
                                 votesSummary.get(restaurant.getId())))
-                .collect(Collectors.toList());
+                .collect(Collectors.toList());*/
+        return null;
     }
 
-    public void vote(int restaurantId) {
+    public void vote(String restaurantId) {
         voteService.vote(restaurantId, authorizationService.getAuthUserId());
     }
 }
