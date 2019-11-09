@@ -2,6 +2,7 @@ package com.gudilov.lunchvotingsystem.services;
 
 import com.gudilov.lunchvotingsystem.UserTestData;
 import com.gudilov.lunchvotingsystem.VoteTestData;
+import com.gudilov.lunchvotingsystem.exceptions.BusinessRuleViolationException;
 import org.assertj.core.api.Assertions;
 import org.junit.Assert;
 import org.junit.Before;
@@ -38,10 +39,15 @@ public class VoteServiceTest {
     @Test
     public void vote() {
         int before = voteService.getTodayResults().get(VoteTestData.RESTAURANT_JOES);
-        voteService.vote(VoteTestData.RESTAURANT_JOES,UserTestData.USER5);
+        voteService.vote(VoteTestData.RESTAURANT_JOES,UserTestData.USER7);
         int after = voteService.getTodayResults().get(VoteTestData.RESTAURANT_JOES);
 
         Assert.assertEquals(before+1,after);
+    }
+
+    @Test(expected = BusinessRuleViolationException.class)
+    public void vote_onlyOneVotePerUserPerDay() {
+        voteService.vote(VoteTestData.RESTAURANT_JOES,UserTestData.USER1);
     }
 
 }

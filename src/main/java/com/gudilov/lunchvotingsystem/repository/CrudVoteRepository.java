@@ -16,4 +16,7 @@ public interface CrudVoteRepository extends JpaRepository<Vote, Integer> {
     @Query("select v from Vote v where v.votingtime >= :startDateTime")
     List<Vote> getAllAfterDateTime(@Param("startDateTime") LocalDateTime startDateTime);
 
+    @Query("select v from Vote v where v.votingtime >= :startDateTime and v.userId = :userId")
+    List<Vote> getAllForDateAndUser(@Param("startDateTime") LocalDateTime startDateTime, @Param("userId") int userId);
+
 }

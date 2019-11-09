@@ -1,11 +1,11 @@
 package com.gudilov.lunchvotingsystem.services;
 
+import com.gudilov.lunchvotingsystem.exceptions.BusinessRuleViolationException;
 import com.gudilov.lunchvotingsystem.model.Vote;
 import com.gudilov.lunchvotingsystem.repository.CrudVoteRepository;
 import com.gudilov.lunchvotingsystem.utils.DateTimeUtil;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
@@ -23,13 +23,18 @@ public class VoteService {
 
     public Vote vote(String restaurantId, int userId) {
         Objects.requireNonNull(restaurantId,"Restaurant cannot be null");
-        Vote vote = new Vote(restaurantId, LocalDateTime.now(),userId);
 
+        List<Vote> todayVotes = crudVoteRepository.getAllForDateAndUser(DateTimeUtil.beginingOfToday(),userId);
+
+        if(todayVotes.size() > 0)
+            throw new BusinessRuleViolationException("The user has already voted today");
+
+        Vote vote = new Vote(restaurantId, LocalDateTime.now(),userId);
         return crudVoteRepository.save(vote);
     }
 
     public Map<String, Integer> getTodayResults() {
-        List<Vote> votes = crudVoteRepository.getAllAfterDateTime(DateTimeUtil.startOfDay(LocalDate.now()));
+        List<Vote> votes = crudVoteRepository.getAllAfterDateTime(DateTimeUtil.beginingOfToday());
 
         return votes.stream().collect(Collectors.groupingBy(Vote::getRestaurantID, Collectors.summingInt(value -> 1)));
     }

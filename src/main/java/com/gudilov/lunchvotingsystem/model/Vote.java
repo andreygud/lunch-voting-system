@@ -1,12 +1,14 @@
 package com.gudilov.lunchvotingsystem.model;
 
 import javax.persistence.Entity;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 
 @Entity
 public class Vote extends AbstractBaseEntity{
 
+    @NotBlank
     private String restaurantID;
 
     private LocalDateTime votingtime;
