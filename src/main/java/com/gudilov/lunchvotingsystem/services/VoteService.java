@@ -4,8 +4,10 @@ import com.gudilov.lunchvotingsystem.exceptions.BusinessRuleViolationException;
 import com.gudilov.lunchvotingsystem.model.Vote;
 import com.gudilov.lunchvotingsystem.repository.CrudVoteRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -22,20 +24,34 @@ public class VoteService {
         this.dateAndTimeService = dateAndTimeService;
     }
 
+    @Transactional
     public Vote vote(String restaurantId, int userId) {
-        Objects.requireNonNull(restaurantId,"Restaurant cannot be null");
+        Objects.requireNonNull(restaurantId, "Restaurant cannot be null");
 
-        List<Vote> todayVotes = crudVoteRepository.getAllForDateAndUser(dateAndTimeService.startOfToday(),userId);
+        List<Vote> todayVotes = crudVoteRepository.getAllForDateAndUser(dateAndTimeService.getCurrentDate(), userId);
 
-        if(todayVotes.size() > 0)
-            throw new BusinessRuleViolationException("The user has already voted today");
+        Vote vote = null;
+        LocalTime currentTime = dateAndTimeService.currentTime();
+        LocalDate currentDate = dateAndTimeService.getCurrentDate();
 
-        Vote vote = new Vote(restaurantId, LocalDateTime.now(),userId);
+        if (currentTime.isBefore(LocalTime.of(11, 0))) {
+            if (todayVotes.size() > 0) {
+                vote = todayVotes.get(0);
+                vote.setRestaurantID(restaurantId);
+                vote.setVoteDate(currentDate);
+                vote.setVoteTime(currentTime);
+            } else {
+                vote = new Vote(restaurantId, currentDate,currentTime, userId);
+            }
+        } else {
+            throw new BusinessRuleViolationException("It is too late, you cannot vote or the vote can't be changed");
+        }
+
         return crudVoteRepository.save(vote);
     }
 
     public Map<String, Integer> getTodayResults() {
-        List<Vote> votes = crudVoteRepository.getAllAfterDateTime(dateAndTimeService.startOfToday());
+        List<Vote> votes = crudVoteRepository.getAllAfterDateTime(dateAndTimeService.getCurrentDate());
 
         return votes.stream().collect(Collectors.groupingBy(Vote::getRestaurantID, Collectors.summingInt(value -> 1)));
     }

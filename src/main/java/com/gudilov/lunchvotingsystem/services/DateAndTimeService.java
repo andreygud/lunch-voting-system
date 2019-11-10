@@ -2,10 +2,7 @@ package com.gudilov.lunchvotingsystem.services;
 
 import org.springframework.stereotype.Service;
 
-import java.time.Clock;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
+import java.time.*;
 
 @Service
 public class DateAndTimeService {
@@ -15,11 +12,12 @@ public class DateAndTimeService {
     public DateAndTimeService() {
     }
 
-    public LocalDateTime startOfToday() {
-        return startOfDay(LocalDate.now(clock));
+    public LocalDate getCurrentDate() {
+        return LocalDate.now(clock);
     }
 
-    public LocalDateTime startOfDay(LocalDate localDate) {
-        return LocalDateTime.of(localDate, LocalTime.MIN);
+    public LocalTime currentTime() {
+        return LocalTime.ofInstant(clock.instant(), ZoneId.systemDefault());
     }
+
 }

@@ -47,7 +47,7 @@ public class VoteServiceTest {
     }
 
     @Test
-    public void vote() {
+    public void vote_newVoteBefore1100() {
         int before = voteService.getTodayResults().get(VoteTestData.RESTAURANT_JOES);
         voteService.vote(VoteTestData.RESTAURANT_JOES,UserTestData.USER7);
         int after = voteService.getTodayResults().get(VoteTestData.RESTAURANT_JOES);
@@ -56,8 +56,37 @@ public class VoteServiceTest {
     }
 
     @Test(expected = BusinessRuleViolationException.class)
-    public void vote_onlyOneVotePerUserPerDay() {
+    public void vote_noNewVoteAfter1100() {
+        dateAndTimeService.setClock(CommonTestData.CLOCK_TODAY_AFTER_1100);
+
+        int before = voteService.getTodayResults().get(VoteTestData.RESTAURANT_JOES);
+        voteService.vote(VoteTestData.RESTAURANT_JOES,UserTestData.USER7);
+        int after = voteService.getTodayResults().get(VoteTestData.RESTAURANT_JOES);
+
+        Assert.assertEquals(before+1,after);
+    }
+
+    @Test(expected = BusinessRuleViolationException.class)
+    public void vote_onlyOneVotePerUserPerDay_NoChangeAfter1100() {
+        dateAndTimeService.setClock(CommonTestData.CLOCK_TODAY_AFTER_1100);
         voteService.vote(VoteTestData.RESTAURANT_JOES,UserTestData.USER1);
+    }
+
+    @Test
+    public void vote_onlyOneVotePerUserPerDay_canChangeRestaurantBefore1100(){
+        int firstRestaurantBefore = voteService.getTodayResults().get(VoteTestData.RESTAURANT_JOES);
+        voteService.vote(VoteTestData.RESTAURANT_JOES,UserTestData.USER7);
+        int firstRestaurantAfter = voteService.getTodayResults().get(VoteTestData.RESTAURANT_JOES);
+
+        Assert.assertEquals(firstRestaurantBefore+1,firstRestaurantAfter);
+
+        int secondRestaurantBefore = voteService.getTodayResults().get(VoteTestData.RESTAURANT_CACTUS);
+        voteService.vote(VoteTestData.RESTAURANT_CACTUS,UserTestData.USER7);
+        int secondRestaurantAfter = voteService.getTodayResults().get(VoteTestData.RESTAURANT_CACTUS);
+        int firstRestaurantAfterSecond = voteService.getTodayResults().get(VoteTestData.RESTAURANT_JOES);
+
+        Assert.assertEquals(secondRestaurantBefore+1, secondRestaurantAfter);
+        Assert.assertEquals(firstRestaurantBefore, firstRestaurantAfterSecond);
     }
 
     @Test

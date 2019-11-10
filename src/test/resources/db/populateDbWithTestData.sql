@@ -1,17 +1,11 @@
 DELETE FROM vote;
 
-INSERT INTO vote (RESTAURANTID, votingtime, userid)
-VALUES  ('Joes', '2019-11-9 10:00:00', 1),
-        ('Joes', '2019-11-9 10:10:00', 2),
-        ('Cactus', '2019-11-9 10:11:00', 3),
-        ('Cactus',  '2019-11-9 10:11:00', 5),
-        ('Cactus',  '2019-11-9 10:38:00', 6);
-
-
-
-
-
-
+INSERT INTO vote (restaurantid, votedate, votetime, userid)
+VALUES ('Joes', '2019-11-7', '10:00:00', 1),
+       ('Joes', '2019-11-7', '10:10:00', 2),
+       ('Cactus', '2019-11-7', '10:11:00', 3),
+       ('Cactus', '2019-11-7', '10:11:00', 5),
+       ('Cactus', '2019-11-7', '10:38:00', 6);
 
 
 /*DELETE FROM user_roles;

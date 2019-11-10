@@ -1,29 +1,38 @@
 package com.gudilov.lunchvotingsystem.model;
 
 import javax.persistence.Entity;
+import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
+import java.time.LocalTime;
 
 @Entity
+@Table(uniqueConstraints = {@UniqueConstraint(columnNames = {"userId","voteDate"},name="vote_unique_userid_votedate_idx")})
 public class Vote extends AbstractBaseEntity{
 
     @NotBlank
     private String restaurantID;
 
-    private LocalDateTime votingtime;
+    @NotNull
+    private LocalDate voteDate;
+
+    @NotNull
+    private LocalTime voteTime;
 
     @NotNull
     private int userId;
 
-    public Vote(String restaurantID, LocalDateTime votingtime, int userId) {
-        this(null,restaurantID, votingtime,userId);
+    public Vote(String restaurantID, LocalDate voteDate, LocalTime voteTime,  int userId) {
+        this(null,restaurantID, voteDate, voteTime,userId);
     }
 
-    public Vote(Integer id, String restaurantID, LocalDateTime votingtime, int userId) {
+    public Vote(Integer id, @NotBlank String restaurantID, @NotNull LocalDate voteDate, @NotNull LocalTime voteTime, @NotNull int userId) {
         super(id);
         this.restaurantID = restaurantID;
-        this.votingtime = votingtime;
+        this.voteDate = voteDate;
+        this.voteTime = voteTime;
         this.userId = userId;
     }
 
@@ -39,12 +48,20 @@ public class Vote extends AbstractBaseEntity{
         this.restaurantID = restaurantID;
     }
 
-    public LocalDateTime getVotingtime() {
-        return votingtime;
+    public LocalDate getVoteDate() {
+        return voteDate;
     }
 
-    public void setVotingtime(LocalDateTime timestamp) {
-        this.votingtime = timestamp;
+    public void setVoteDate(LocalDate timestamp) {
+        this.voteDate = timestamp;
+    }
+
+    public LocalTime getVoteTime() {
+        return voteTime;
+    }
+
+    public void setVoteTime(LocalTime voteTime) {
+        this.voteTime = voteTime;
     }
 
     public int getUserId() {
