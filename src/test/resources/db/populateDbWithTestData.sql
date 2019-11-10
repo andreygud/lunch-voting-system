@@ -1,11 +1,11 @@
 DELETE FROM vote;
 
 INSERT INTO vote (RESTAURANTID, votingtime, userid)
-VALUES  ('Joes', now(), 1),
-        ('Joes', now(), 2),
-        ('Cactus', now(), 3),
-        ('Cactus', now(), 5),
-        ('Cactus', now(), 6)
+VALUES  ('Joes', '2019-11-9 10:00:00', 1),
+        ('Joes', '2019-11-9 10:10:00', 2),
+        ('Cactus', '2019-11-9 10:11:00', 3),
+        ('Cactus',  '2019-11-9 10:11:00', 5),
+        ('Cactus',  '2019-11-9 10:38:00', 6);
 
 
 

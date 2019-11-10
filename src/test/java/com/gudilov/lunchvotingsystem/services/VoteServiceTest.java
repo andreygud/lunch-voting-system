@@ -1,8 +1,10 @@
 package com.gudilov.lunchvotingsystem.services;
 
+import com.gudilov.lunchvotingsystem.CommonTestData;
 import com.gudilov.lunchvotingsystem.UserTestData;
 import com.gudilov.lunchvotingsystem.VoteTestData;
 import com.gudilov.lunchvotingsystem.exceptions.BusinessRuleViolationException;
+import com.gudilov.lunchvotingsystem.services.mock.ShiftedDateAndTimeService;
 import org.assertj.core.api.Assertions;
 import org.junit.Assert;
 import org.junit.Before;
@@ -15,19 +17,27 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.Map;
 
+import static com.gudilov.lunchvotingsystem.CommonTestData.CLOCK_TODAY_BEFORE_1100;
+
 
 @ContextConfiguration({
-        "classpath:spring/spring-app.xml"
+        "classpath:spring/spring-app.xml",
+        "classpath:spring/spring-mock-rep.xml"
 })
 @RunWith(SpringRunner.class)
-@Sql("/db/populateDB.sql")
+@Sql("/db/populateDbWithTestData.sql")
 public class VoteServiceTest {
 
     @Autowired
     private VoteService voteService;
 
+    @Autowired
+    private ShiftedDateAndTimeService dateAndTimeService;
+
     @Before
     public void setUp(){
+        //setTime for everyone
+        dateAndTimeService.setClock(CLOCK_TODAY_BEFORE_1100);
     }
 
     @Test
@@ -47,6 +57,12 @@ public class VoteServiceTest {
 
     @Test(expected = BusinessRuleViolationException.class)
     public void vote_onlyOneVotePerUserPerDay() {
+        voteService.vote(VoteTestData.RESTAURANT_JOES,UserTestData.USER1);
+    }
+
+    @Test
+    public void vote_shiftTimeAndVote(){
+        dateAndTimeService.setClock(CommonTestData.CLOCK_TOMMOROW_BEFORE_1100);
         voteService.vote(VoteTestData.RESTAURANT_JOES,UserTestData.USER1);
     }
 
