@@ -1,4 +1,4 @@
-package com.gudilov.lunchvotingsystem.utils;
+package com.gudilov.lunchvotingsystem.common.utils;
 
 import org.springframework.lang.Nullable;
 import org.springframework.util.StringUtils;

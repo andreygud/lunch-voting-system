@@ -1,6 +1,6 @@
 package com.gudilov.lunchvotingsystem.vote.model;
 
-import com.gudilov.lunchvotingsystem.model.AbstractBaseEntity;
+import com.gudilov.lunchvotingsystem.common.model.AbstractBaseEntity;
 
 import javax.persistence.Entity;
 import javax.persistence.Table;

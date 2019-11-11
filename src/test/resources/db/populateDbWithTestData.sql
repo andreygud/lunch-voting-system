@@ -1,4 +1,7 @@
 DELETE FROM vote;
+DELETE FROM restaurant;
+DELETE FROM menuitem;
+DELETE FROM menu;
 
 INSERT INTO vote (restaurantid, votedate, votetime, userid)
 VALUES ('Joes', '2019-11-7', '10:00:00', 1),
@@ -7,11 +10,24 @@ VALUES ('Joes', '2019-11-7', '10:00:00', 1),
        ('Cactus', '2019-11-7', '10:11:00', 5),
        ('Cactus', '2019-11-7', '10:38:00', 6);
 
+INSERT INTO menu (id, date, description)
+VALUES (1, '2019-11-7', 'Joes Menu - Chicken'),
+       (2, '2019-11-7', 'Cactus Menu - Meat');
+
+INSERT INTO restaurant (id, address, description, restaurantname, menu_id)
+VALUES (1, '109 8 Ave SW, Calgary, AB T2P 1B4', 'www.originaljoes.ca', 'Joes', 1),
+       (2, '4653 Kingsway, Burnaby, BC V5H 4L3', 'http://www.cactusclubcafe.com/', 'Cactus', 2);
+
+INSERT INTO menuitem (description, price, menu_id)
+VALUES ('Chicken Parmesan', 23.5, 1),
+       ('Classic Bowl', 18.5, 1),
+       ('Sandwich of a day', 15.3, 1),
+       ('Four Mushrooms Steak', 33.0, 2),
+       ('Truffles Fries', 12.0, 2),
+       ('Cactus Burger', 16.8, 2);
 
 /*DELETE FROM user_roles;
-DELETE FROM meals;
 DELETE FROM users;
-ALTER SEQUENCE global_seq RESTART WITH 100000;
 
 INSERT INTO users (name, email, password) VALUES
   ('User', 'user@yandex.ru', 'password'),
@@ -22,15 +38,4 @@ INSERT INTO user_roles (role, user_id) VALUES
   ('ROLE_USER', 100000),
   ('ROLE_ADMIN', 100001),
   ('ROLE_USER', 100002);
-
-INSERT INTO meals (date_time, description, calories, user_id)
-VALUES ('2015-05-30 10:00:00', 'Завтрак', 500, 100000),
-       ('2015-05-30 13:00:00', 'Обед', 1000, 100000),
-       ('2015-05-30 20:00:00', 'Ужин', 500, 100000),
-       ('2015-05-31 0:00:00', 'Еда на граничное значение', 100, 100000),
-       ('2015-05-31 10:00:00', 'Завтрак', 500, 100000),
-       ('2015-05-31 13:00:00', 'Обед', 1000, 100000),
-       ('2015-05-31 20:00:00', 'Ужин', 510, 100000),
-       ('2015-06-01 14:00:00', 'Админ ланч', 510, 100001),
-       ('2015-06-01 21:00:00', 'Админ ужин', 1500, 100001);
 */

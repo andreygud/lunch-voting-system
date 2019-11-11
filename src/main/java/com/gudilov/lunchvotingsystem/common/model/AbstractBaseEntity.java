@@ -1,4 +1,4 @@
-package com.gudilov.lunchvotingsystem.model;
+package com.gudilov.lunchvotingsystem.common.model;
 
 import org.springframework.data.domain.Persistable;
 
