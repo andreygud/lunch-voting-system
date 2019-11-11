@@ -1,9 +1,9 @@
-package com.gudilov.lunchvotingsystem.web;
+package com.gudilov.lunchvotingsystem.vote.web;
 
-import com.gudilov.lunchvotingsystem.dto.VoteResult;
-import com.gudilov.lunchvotingsystem.services.AuthorizationService;
-import com.gudilov.lunchvotingsystem.services.RestaurantService;
-import com.gudilov.lunchvotingsystem.services.VoteService;
+import com.gudilov.lunchvotingsystem.vote.model.Vote;
+import com.gudilov.lunchvotingsystem.vote.services.AuthorizationService;
+import com.gudilov.lunchvotingsystem.vote.services.RestaurantService;
+import com.gudilov.lunchvotingsystem.vote.services.VoteService;
 
 import java.util.List;
 
@@ -20,7 +20,7 @@ public class VoteController {
         this.voteService = voteService;
     }
 
-    public List<VoteResult> getVotingResults() {
+    public List<Vote> getVotingResults() {
 
  /*       int userId = authorizationService.getAuthUserId();
 

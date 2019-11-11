@@ -1,6 +1,6 @@
-package com.gudilov.lunchvotingsystem.services;
+package com.gudilov.lunchvotingsystem.vote.services;
 
-import com.gudilov.lunchvotingsystem.model.Restaurant;
+import com.gudilov.lunchvotingsystem.restaurant.model.Restaurant;
 
 import java.util.List;
 

@@ -1,4 +1,4 @@
-package com.gudilov.lunchvotingsystem.services;
+package com.gudilov.lunchvotingsystem.vote.services;
 
 //@Service
 public class AuthorizationService {

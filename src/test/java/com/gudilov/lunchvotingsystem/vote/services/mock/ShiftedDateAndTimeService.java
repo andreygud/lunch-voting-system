@@ -1,6 +1,6 @@
-package com.gudilov.lunchvotingsystem.services.mock;
+package com.gudilov.lunchvotingsystem.vote.services.mock;
 
-import com.gudilov.lunchvotingsystem.services.DateAndTimeService;
+import com.gudilov.lunchvotingsystem.vote.services.DateAndTimeService;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 

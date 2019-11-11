@@ -12,8 +12,8 @@
 
 
     <context:property-placeholder location="classpath:db/postgres.properties" system-properties-mode="OVERRIDE"/>
-    <context:component-scan base-package="com.gudilov.**.web"/>
-    <context:component-scan base-package="com.gudilov.**.services"/>
+    <context:component-scan base-package="com.gudilov.lunchvotingsystem.vote.web"/>
+    <context:component-scan base-package="com.gudilov.lunchvotingsystem.vote.services"/>
 
     <!--    <jdbc:initialize-database data-source="dataSource" enabled="${database.init}">
             <jdbc:script location="classpath:db/${jdbc.initLocation}"/>
@@ -63,6 +63,6 @@
         </property>
     </bean>
 
-    <context:component-scan base-package="com.gudilov.**.repository"/>
-    <jpa:repositories base-package="com.gudilov.**.repository"/>
+    <context:component-scan base-package="com.gudilov.lunchvotingsystem.vote.repository"/>
+    <jpa:repositories base-package="com.gudilov.lunchvotingsystem.vote.repository"/>
 </beans>

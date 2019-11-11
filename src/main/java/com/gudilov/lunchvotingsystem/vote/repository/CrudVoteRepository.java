@@ -1,7 +1,7 @@
-package com.gudilov.lunchvotingsystem.repository;
+package com.gudilov.lunchvotingsystem.vote.repository;
 
 
-import com.gudilov.lunchvotingsystem.model.Vote;
+import com.gudilov.lunchvotingsystem.vote.model.Vote;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;

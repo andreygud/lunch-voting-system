@@ -1,4 +1,6 @@
-package com.gudilov.lunchvotingsystem.model;
+package com.gudilov.lunchvotingsystem.restaurant.model;
+
+import com.gudilov.lunchvotingsystem.model.AbstractBaseEntity;
 
 import javax.persistence.Entity;
 

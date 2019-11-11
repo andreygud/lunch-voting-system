@@ -1,4 +1,6 @@
-package com.gudilov.lunchvotingsystem.model;
+package com.gudilov.lunchvotingsystem.vote.model;
+
+import com.gudilov.lunchvotingsystem.model.AbstractBaseEntity;
 
 import javax.persistence.Entity;
 import javax.persistence.Table;
@@ -10,7 +12,7 @@ import java.time.LocalTime;
 
 @Entity
 @Table(uniqueConstraints = {@UniqueConstraint(columnNames = {"userId","voteDate"},name="vote_unique_userid_votedate_idx")})
-public class Vote extends AbstractBaseEntity{
+public class Vote extends AbstractBaseEntity {
 
     @NotBlank
     private String restaurantID;

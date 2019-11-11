@@ -1,4 +1,4 @@
-package com.gudilov.lunchvotingsystem.web;
+package com.gudilov.lunchvotingsystem.vote.web;
 
 import org.junit.Before;
 import org.junit.Test;
