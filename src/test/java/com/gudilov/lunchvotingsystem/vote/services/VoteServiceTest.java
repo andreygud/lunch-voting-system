@@ -3,7 +3,7 @@ package com.gudilov.lunchvotingsystem.vote.services;
 import com.gudilov.lunchvotingsystem.CommonTestData;
 import com.gudilov.lunchvotingsystem.UserTestData;
 import com.gudilov.lunchvotingsystem.VoteTestData;
-import com.gudilov.lunchvotingsystem.vote.exceptions.BusinessRuleViolationException;
+import com.gudilov.lunchvotingsystem.common.exceptions.BusinessRuleViolationException;
 import com.gudilov.lunchvotingsystem.vote.services.mock.ShiftedDateAndTimeService;
 import org.assertj.core.api.Assertions;
 import org.junit.Assert;

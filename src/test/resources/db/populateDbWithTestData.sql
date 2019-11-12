@@ -18,7 +18,7 @@ INSERT INTO restaurant (id, address, description, restaurantname, menu_id)
 VALUES (1, '109 8 Ave SW, Calgary, AB T2P 1B4', 'www.originaljoes.ca', 'Joes', 1),
        (2, '4653 Kingsway, Burnaby, BC V5H 4L3', 'http://www.cactusclubcafe.com/', 'Cactus', 2);
 
-INSERT INTO menuitem (description, price, menu_id)
+INSERT INTO menuitem (dishname, price, menu_id)
 VALUES ('Chicken Parmesan', 23.5, 1),
        ('Classic Bowl', 18.5, 1),
        ('Sandwich of a day', 15.3, 1),

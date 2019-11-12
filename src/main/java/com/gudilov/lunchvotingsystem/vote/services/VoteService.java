@@ -1,6 +1,6 @@
 package com.gudilov.lunchvotingsystem.vote.services;
 
-import com.gudilov.lunchvotingsystem.vote.exceptions.BusinessRuleViolationException;
+import com.gudilov.lunchvotingsystem.common.exceptions.BusinessRuleViolationException;
 import com.gudilov.lunchvotingsystem.vote.model.Vote;
 import com.gudilov.lunchvotingsystem.vote.repository.CrudVoteRepository;
 import org.springframework.stereotype.Service;

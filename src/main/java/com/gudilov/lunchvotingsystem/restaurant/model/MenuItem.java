@@ -7,16 +7,16 @@ import javax.persistence.Entity;
 @Entity
 public class MenuItem extends AbstractBaseEntity {
 
-    private String description;
+    private String dishName;
     //consider bigdecimal here in the future
     private long price;
 
-    public String getDescription() {
-        return description;
+    public String getDishName() {
+        return dishName;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setDishName(String description) {
+        this.dishName = description;
     }
 
     public long getPrice() {
