@@ -39,7 +39,13 @@
 
     <jdbc:initialize-database data-source="dataSource" enabled="${database.init}">
         <jdbc:script location="classpath:db/${database.initDB}"/>
-        <jdbc:script encoding="utf-8" location="classpath:db/${database.populateDB}"/>
+        <!--<jdbc:script encoding="utf-8" location="classpath:db/${database.populateDB}"/>-->
     </jdbc:initialize-database>
 
+    <context:component-scan base-package="com.gudilov.lunchvotingsystem.**.repository"/>
+    <jpa:repositories base-package="com.gudilov.lunchvotingsystem.**.repository"/>
+
+    <tx:annotation-driven/>
+    <bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager"
+          p:entityManagerFactory-ref="entityManagerFactory"/>
 </beans>
