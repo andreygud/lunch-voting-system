@@ -10,7 +10,7 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.EnumSet;
 import java.util.Set;
@@ -35,34 +35,14 @@ public class User extends AbstractNamedEntity implements HasEmail {
 
     @Column(name = "registered", nullable = false, columnDefinition = "timestamp default now()")
     @NotNull
-    private LocalDate registered = LocalDate.now();
+    private LocalDateTime registered = LocalDateTime.now();
 
     @Enumerated(EnumType.STRING)
     @CollectionTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"))
     @Column(name = "role")
     @ElementCollection(fetch = FetchType.EAGER)
     @BatchSize(size = 200)
-    private Set<Role> roles;
-
-    public User() {
-    }
-
-    public User(User u) {
-        this(u.getId(), u.getName(), u.getEmail(), u.getPassword(), u.isEnabled(), u.getRegistered(), u.getRoles());
-    }
-
-    public User(Integer id, String name, String email, String password, Role role, Role... roles) {
-        this(id, name, email, password, true, LocalDate.now(), EnumSet.of(role, roles));
-    }
-
-    public User(Integer id, String name, String email, String password, boolean enabled, LocalDate registered, Collection<Role> roles) {
-        super(id, name);
-        this.email = email;
-        this.password = password;
-        this.enabled = enabled;
-        this.registered = registered;
-        setRoles(roles);
-    }
+    private Set<Role> roles = Set.of(Role.ROLE_USER);
 
     @Override
     public String getEmail() {
@@ -77,11 +57,11 @@ public class User extends AbstractNamedEntity implements HasEmail {
         this.password = password;
     }
 
-    public LocalDate getRegistered() {
+    public LocalDateTime getRegistered() {
         return registered;
     }
 
-    public void setRegistered(LocalDate registered) {
+    public void setRegistered(LocalDateTime registered) {
         this.registered = registered;
     }
 
@@ -112,6 +92,7 @@ public class User extends AbstractNamedEntity implements HasEmail {
                 ", email=" + email +
                 ", name=" + name +
                 ", enabled=" + enabled +
+                ", registered=" + registered +
                 ", roles=" + roles +
                 '}';
     }

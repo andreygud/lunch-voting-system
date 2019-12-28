@@ -9,8 +9,12 @@ import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 
 import java.util.List;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 @SpringJUnitConfig(locations = {
-        "classpath:spring/spring-db.xml"
+        "classpath:spring/spring-db.xml",
+        "classpath:spring/spring-app.xml",
+        "classpath:spring/spring-mvc.xml"
 })
 @Sql(scripts = "classpath:db/populateDB.sql", config = @SqlConfig(encoding = "UTF-8"))
 class UserRepositoryTest {
@@ -23,8 +27,9 @@ class UserRepositoryTest {
 
         List<User> users = userRepository.getAll();
 
-        System.out.println(users);
+        assertEquals(2,users.size());
 
     }
+
 
 }

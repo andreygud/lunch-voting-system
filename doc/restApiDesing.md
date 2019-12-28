@@ -8,6 +8,7 @@ regular users.
 Function | Action | URL
 ---|---|---
 Full user list  |GET    |/rest/admin/users
+Get user        |GET    |/rest/admin/user/{id}
 Add user        |POST   |/rest/admin/user
 Remove user     |DELETE |/rest/admin/user/{id}
 Edit user       |PUT    |/rest/admin/user/{id}  
@@ -26,12 +27,25 @@ The result is returned in JSON format in the body of the response .
 curl -i localhost:8080/rest/admin/users
 ```
 
+### Get a user
+```
+GET /rest/admin/user/{id}
+```
+The call returns information about a user.   
+
+*Example:*
+
+```
+curl -i localhost:8080/rest/admin/user/{id}
+```
+
 ### Add user 
 ```
 POST /rest/admin/user
 ```
 The call creates a user in the system. The system checks for duplicate emails and doesn't allow to create a user with 
-the email already registered in the system. 
+the email already registered in the system. It also sets the user role to User by default, if needed it can be changed 
+through edit request at a later time.  
 
 *Example:*
 
@@ -58,8 +72,10 @@ curl -i -X DELETE localhost:8080/rest/admin/user/100001
 PUT /rest/admin/user/{id}
 ```
 The call update all the parameters of a user. It takes the system user id and the user parameters in JSON format in the 
-body of the request. Standard format validations and duplicate checks are made. It updates the password if it is 
-specified in the request, or leave it intact if it is not.  
+body of the request. Standard format validations and duplicate checks are made. This call merges parameters sent in the 
+request with the existing parameters of the user, for example the user name "Sam" before the call and the email address is 
+"adams@hotmail.com", the update request contains only the new user name "Sam Adams", so the resulting user will have the 
+name set to "Sam Adams" and the email address will stay the same - "adams@hotmail.com".
 
 *Example:*
 

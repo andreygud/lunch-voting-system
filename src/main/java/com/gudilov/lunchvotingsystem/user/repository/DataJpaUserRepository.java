@@ -1,7 +1,6 @@
 package com.gudilov.lunchvotingsystem.user.repository;
 
 import com.gudilov.lunchvotingsystem.user.model.User;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Repository;
 
@@ -11,8 +10,11 @@ import java.util.List;
 public class DataJpaUserRepository implements UserRepository {
     private static final Sort SORT_NAME_EMAIL = Sort.by(Sort.Direction.ASC, "name", "email");
 
-    @Autowired
     private CrudUserRepository crudRepository;
+
+    public DataJpaUserRepository(CrudUserRepository crudRepository) {
+        this.crudRepository = crudRepository;
+    }
 
     @Override
     public User save(User user) {
