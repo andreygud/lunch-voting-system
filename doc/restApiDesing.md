@@ -7,7 +7,7 @@ regular users.
 
 Function | Action | URL
 ---|---|---
-Full user list  |GET    |/rest/admin/users
+Full user list  |GET    |/rest/admin/user
 Get user        |GET    |/rest/admin/user/{id}
 Add user        |POST   |/rest/admin/user
 Remove user     |DELETE |/rest/admin/user/{id}
@@ -15,7 +15,7 @@ Edit user       |PUT    |/rest/admin/user/{id}
 
 ### Full user list
 ```
-GET /rest/admin/users
+GET /rest/admin/user
 ```
 The call returns the full list of the users registered in the system. 
 The list is sorted alphabetically by the first name and then by the email.
@@ -24,7 +24,7 @@ The result is returned in JSON format in the body of the response .
 *Example:*
 
 ```
-curl -i localhost:8080/rest/admin/users
+curl -i localhost:8080/rest/admin/user
 ```
 
 ### Get a user

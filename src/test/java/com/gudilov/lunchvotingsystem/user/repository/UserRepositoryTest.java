@@ -17,6 +17,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
         "classpath:spring/spring-mvc.xml"
 })
 @Sql(scripts = "classpath:db/populateDB.sql", config = @SqlConfig(encoding = "UTF-8"))
+//todo remove this testing when Service Layer and WebLayer unit tests are ready
 class UserRepositoryTest {
 
     @Autowired

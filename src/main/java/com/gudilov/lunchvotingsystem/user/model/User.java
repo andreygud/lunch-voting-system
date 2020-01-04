@@ -44,6 +44,23 @@ public class User extends AbstractNamedEntity implements HasEmail {
     @BatchSize(size = 200)
     private Set<Role> roles = Set.of(Role.ROLE_USER);
 
+    public User(Integer id, String name, String email, String password, boolean enabled, LocalDateTime registered, Set<Role> roles) {
+        super(id, name);
+        setEmail(email);
+        setPassword(password);
+        setRegistered(registered);
+        setEnabled(enabled);
+        setRoles(roles);
+    }
+
+    public User(User u) {
+        this(u.getId(), u.getName(), u.getEmail(), u.getPassword(), u.isEnabled(), u.getRegistered(), u.getRoles());
+    }
+
+    public User() {
+        super();
+    }
+
     @Override
     public String getEmail() {
         return email;

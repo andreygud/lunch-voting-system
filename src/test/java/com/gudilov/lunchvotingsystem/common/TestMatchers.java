@@ -1,7 +1,11 @@
 package com.gudilov.lunchvotingsystem.common;
 
+import com.gudilov.lunchvotingsystem.common.utils.TestUtil;
+import org.springframework.test.web.servlet.ResultMatcher;
+
 import java.util.List;
 
+import static com.gudilov.lunchvotingsystem.common.utils.TestUtil.readListFromJsonMvcResult;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class TestMatchers<T> {
@@ -41,5 +45,17 @@ public class TestMatchers<T> {
         } else {
             assertThat(actual).usingElementComparatorIgnoringFields(fieldsToIgnore).isEqualTo(expected);
         }
+    }
+
+    public ResultMatcher contentJson(T expected) {
+        return result -> assertMatch(TestUtil.readFromJsonMvcResult(result, clazz), expected);
+    }
+
+    public ResultMatcher contentJson(T... expected) {
+        return contentJson(List.of(expected));
+    }
+
+    public ResultMatcher contentJson(Iterable<T> expected) {
+        return result -> assertMatch(readListFromJsonMvcResult(result, clazz), expected);
     }
 }

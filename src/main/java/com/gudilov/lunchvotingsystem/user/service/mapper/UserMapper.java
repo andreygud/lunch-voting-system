@@ -8,6 +8,7 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
 import org.mapstruct.NullValuePropertyMappingStrategy;
+import org.mapstruct.factory.Mappers;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -16,12 +17,16 @@ import java.util.List;
 @Mapper(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
 public interface UserMapper {
 
+    UserMapper INSTANCE = Mappers.getMapper(UserMapper.class);
+
     void updateExistingEntity(UserUpdateTo source, @MappingTarget User target);
 
-    @Mapping(target = "roles",nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.SET_TO_DEFAULT)
+    @Mapping(target = "roles", nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.SET_TO_DEFAULT)
     User transformToIntoEntity(UserCreateTo userCreateTo);
 
     UserViewTo transformEntityIntoViewTo(User user);
 
     List<UserViewTo> transformEntitiesIntoViewTos(List<User> users);
+
+    UserUpdateTo transformEntityIntoUpdateTo(User user);
 }
