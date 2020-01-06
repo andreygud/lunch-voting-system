@@ -1,27 +1,25 @@
 package com.gudilov.lunchvotingsystem.common.web;
 
-import com.gudilov.lunchvotingsystem.common.exceptions.ErrorType;
 import com.gudilov.lunchvotingsystem.common.web.json.JsonUtil;
 import com.gudilov.lunchvotingsystem.user.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors;
+import org.springframework.test.context.jdbc.Sql;
+import org.springframework.test.context.jdbc.SqlConfig;
 import org.springframework.test.context.junit.jupiter.web.SpringJUnitWebConfig;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
-import org.springframework.test.web.servlet.ResultMatcher;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.filter.CharacterEncodingFilter;
 
 import javax.annotation.PostConstruct;
 
 import static com.gudilov.lunchvotingsystem.common.web.AbstractControllerTest.RequestWrapper.wrap;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 
 
 @SpringJUnitWebConfig(locations = {
@@ -29,7 +27,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
         "classpath:spring/spring-mvc.xml",
         "classpath:spring/spring-db.xml"
 })
-@Transactional
+@Sql(scripts = "classpath:db/populateDB.sql", config = @SqlConfig(encoding = "UTF-8"))
 abstract public class AbstractControllerTest {
 
     private static final CharacterEncodingFilter CHARACTER_ENCODING_FILTER = new CharacterEncodingFilter();
@@ -49,9 +47,6 @@ abstract public class AbstractControllerTest {
     public AbstractControllerTest(String url) {
         this.url = url + '/';
     }
-
-    @Autowired
-    protected MessageUtil messageUtil;
 
     @PostConstruct
     private void postConstruct() {
@@ -150,15 +145,4 @@ abstract public class AbstractControllerTest {
         }
     }
 
-    private String getMessage(String code) {
-        return messageUtil.getMessage(code, MessageUtil.RU_LOCALE);
-    }
-
-    public ResultMatcher errorType(ErrorType type) {
-        return jsonPath("$.type").value(type.name());
-    }
-
-    public ResultMatcher detailMessage(String code) {
-        return jsonPath("$.details").value(getMessage(code));
-    }
 }

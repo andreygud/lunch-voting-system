@@ -54,7 +54,6 @@ class UserAdminRestControllerTest extends AbstractControllerTest {
 
     @Test
     void update() throws Exception {
-
         User updated = new User(USER);
         updated.setEmail("new@email.com");
         UserUpdateTo updateTo = UserMapper.INSTANCE.transformEntityIntoUpdateTo(updated);
@@ -68,8 +67,6 @@ class UserAdminRestControllerTest extends AbstractControllerTest {
         USER_VIEW_TO_TEST_MATCHERS.assertMatch(updatedViewToActual, updatedToExpected);
     }
 
-    //todo add validation checks along with implemented ErrorHandling
-
     @Test
     void create() throws Exception {
         perform(doPost().jsonBody(USER_1_CTO))
@@ -81,5 +78,43 @@ class UserAdminRestControllerTest extends AbstractControllerTest {
         USER_VIEW_TO_TEST_MATCHERS.assertMatch(createdViewToActual, USER1_VIEW_TO);
     }
 
-    //todo update with validations check for the CreateTO object
+    @Test
+    void update_bindValidationError() throws Exception {
+        perform(doPut(USER_ID).jsonBody(WRONG_INPUTS_USER_UTO))
+                .andDo(print())
+                .andExpect(status().isUnprocessableEntity())
+                .andExpect(content().json(VIOLATED_VALIDATIONS_JSON_UTO));
+    }
+
+    @Test
+    void create_duplicate_conflictError() throws Exception {
+        perform(doPost().jsonBody(USER_DUPLICATE_CTO))
+                .andDo(print())
+                .andExpect(status().isConflict())
+                .andExpect(content().json("{\"errorMessage\":\"DataIntegrityViolationException\"}"));
+    }
+
+    @Test
+    void create_bindValidationError() throws Exception {
+        perform(doPost().jsonBody(WRONG_ALL_INPUT_USER_CTO))
+                .andDo(print())
+                .andExpect(status().isUnprocessableEntity())
+                .andExpect(content().json(VIOLATED_VALIDATIONS_JSON_CTO));
+    }
+
+    @Test
+    void errorHandling_illegalRequestDataError() throws Exception {
+        perform(doPost().jsonBody("gibberish string"))
+                .andDo(print())
+                .andExpect(status().isUnprocessableEntity())
+                .andExpect(content().json("{\"errorMessage\":\"HttpMessageNotReadableException\"}"));
+    }
+
+    @Test
+    void errorHandling_notFoundError() throws Exception {
+        perform(doGet(100))
+                .andDo(print())
+                .andExpect(status().isNotFound())
+                .andExpect(content().json("{\"errorMessage\":\"NotFoundException\",\"details\":[\"id=100\"]}"));
+    }
 }

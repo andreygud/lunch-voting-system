@@ -3,6 +3,9 @@ package com.gudilov.lunchvotingsystem.common.utils;
 import com.gudilov.lunchvotingsystem.common.exceptions.IllegalRequestDataException;
 import com.gudilov.lunchvotingsystem.common.exceptions.NotFoundException;
 import com.gudilov.lunchvotingsystem.common.model.HasId;
+import org.slf4j.Logger;
+
+import javax.servlet.http.HttpServletRequest;
 
 public class ValidationUtil {
 
@@ -54,5 +57,13 @@ public class ValidationUtil {
         return e.getLocalizedMessage() != null ? e.getLocalizedMessage() : e.getClass().getName();
     }
 
-
+    public static Throwable logAndGetRootCause(Logger log, HttpServletRequest req, Exception e, boolean logException, String errorType) {
+        Throwable rootCause = ValidationUtil.getRootCause(e);
+        if (logException) {
+            log.error(errorType + " at request " + req.getRequestURL(), rootCause);
+        } else {
+            log.warn("{} at request  {}: {}", errorType, req.getRequestURL(), rootCause.toString());
+        }
+        return rootCause;
+    }
 }

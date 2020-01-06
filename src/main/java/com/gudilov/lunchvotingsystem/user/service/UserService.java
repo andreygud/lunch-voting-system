@@ -44,7 +44,6 @@ public class UserService {
 
         User user = checkNotFoundWithId(userRepository.get(updateTo.getId()), updateTo.getId());
         userMapper.updateExistingEntity(updateTo,user);
-        checkNotFoundWithId(userRepository.save(user),user.getId());
     }
 
 

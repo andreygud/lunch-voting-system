@@ -1,7 +1,6 @@
 package com.gudilov.lunchvotingsystem.user.service;
 
 import com.gudilov.lunchvotingsystem.user.model.Role;
-import com.gudilov.lunchvotingsystem.user.to.UserCreateTo;
 import com.gudilov.lunchvotingsystem.user.to.UserUpdateTo;
 import com.gudilov.lunchvotingsystem.user.to.UserViewTo;
 import org.junit.jupiter.api.Test;
@@ -52,19 +51,15 @@ class UserServiceTest {
 
     @Test
     void create_inputFieldsValidation() {
-        UserCreateTo wrongName =
-                new UserCreateTo(null,"A","wrongemail",null,null);
 
         Set<String> constraintViolations =
                 ((ConstraintViolationException) getRootCause(
-                        assertThrows(Exception.class, () -> userService.create(wrongName))))
+                        assertThrows(Exception.class, () -> userService.create(WRONG_ALL_INPUT_USER_CTO))))
                 .getConstraintViolations().stream().map(ConstraintViolation::getMessage)
                 .collect(Collectors.toSet());
 
         assertThat(constraintViolations)
-                .isEqualTo(Set.of("must not be blank",
-                        "must be a well-formed email address",
-                        "size must be between 2 and 100"));
+                .isEqualTo(VIOLATED_VALIDATIONS_CTO);
     }
 
     @Test
