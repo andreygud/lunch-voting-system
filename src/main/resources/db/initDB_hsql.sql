@@ -1,5 +1,6 @@
 DROP TABLE IF EXISTS user_roles;
 DROP TABLE IF EXISTS users;
+DROP TABLE IF EXISTS restaurant;
 DROP SEQUENCE IF EXISTS global_seq;
 
 CREATE SEQUENCE global_seq START WITH 100000 INCREMENT BY 1;
@@ -23,3 +24,11 @@ CREATE TABLE user_roles
     CONSTRAINT user_roles_idx UNIQUE (user_id, role),
     FOREIGN KEY (user_id) REFERENCES USERS (id) ON DELETE CASCADE
 );
+
+CREATE TABLE restaurant
+  (
+      id          INTEGER default global_seq.NEXTVAL PRIMARY KEY,
+      name        VARCHAR(255) NOT NULL,
+      description VARCHAR(1000),
+      address     VARCHAR(255)
+  );
