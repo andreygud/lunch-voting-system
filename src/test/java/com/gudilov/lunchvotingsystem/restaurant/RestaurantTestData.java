@@ -16,11 +16,12 @@ public class RestaurantTestData {
     public static final RestaurantTo RESTAURANT3_TO = new RestaurantTo(RESTAURANT3_ID, "Hi Genki Restaurant", "Sushi", "6680 Southoaks Crescent, Burnaby");
 
 
+    public static final int RESTAURANT_CREATED_ID = 100005;
     public static final RestaurantTo RESTAURANT_CREATE_TO = new RestaurantTo(null, "Sams Kitchen", "just simple food", "behind the yellow building");
     public static final RestaurantTo RESTAURANT_WRONG_ALL_INPUT_CREATE_TO = new RestaurantTo(null, "S", null, "beh");
-    public static final RestaurantTo RESTAURANT_CREATED_TO = new RestaurantTo(null, "Sams Kitchen", "just simple food", "behind the yellow building");
-
+    public static final RestaurantTo RESTAURANT_CREATED_TO = new RestaurantTo(RESTAURANT_CREATED_ID, "Sams Kitchen", "just simple food", "behind the yellow building");
     public static final Set<String> RESTAURANT_CREATION_VIOLATIONS = Set.of("size must be between 2 and 100", "size must be between 5 and 255");
+    public static final String WRONG_INPUT_JSON = "{\"errorMessage\":\"MethodArgumentNotValidException\",\"details\":[\"name has wrong value: size must be between 2 and 100\",\"address has wrong value: size must be between 5 and 255\"]}";
 
     public static final TestMatchers<RestaurantTo> RESTAURANT_TO_TEST_MATCHERS = TestMatchers.useFieldsComparator(RestaurantTo.class);
 

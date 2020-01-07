@@ -19,7 +19,7 @@ public class UserTestData {
     public static final User ADMIN = new User(ADMIN_ID, "Admin", "admin@gmail.com", "{noop}admin", true, LocalDateTime.now(), Set.of(Role.ROLE_ADMIN, Role.ROLE_USER));
     public static final UserViewTo ADMIN_VIEW_TO = UserMapper.INSTANCE.transformEntityIntoViewTo(ADMIN);
 
-    public static final int USER1_ID = 100002;
+    public static final int USER1_ID = 100005;
     public static final UserCreateTo USER_1_CTO = new UserCreateTo(null, "Sam", "sam@gmail.com", "password", null);
     public static final UserViewTo USER1_VIEW_TO = new UserViewTo(USER1_ID, "Sam", "sam@gmail.com", true, null, Set.of(Role.ROLE_USER));
 

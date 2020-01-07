@@ -22,7 +22,7 @@ import static com.gudilov.lunchvotingsystem.common.utils.ValidationUtil.assureId
 public class UserAdminRestController {
     protected final Logger log = LoggerFactory.getLogger(getClass());
 
-    static final String REST_URL = "/rest/admin/user";
+    public static final String REST_URL = "/rest/admin/user";
 
     private UserService userService;
 

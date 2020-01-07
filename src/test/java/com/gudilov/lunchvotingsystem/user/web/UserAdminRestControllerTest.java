@@ -101,20 +101,4 @@ class UserAdminRestControllerTest extends AbstractControllerTest {
                 .andExpect(status().isUnprocessableEntity())
                 .andExpect(content().json(VIOLATED_VALIDATIONS_JSON_CTO));
     }
-
-    @Test
-    void errorHandling_illegalRequestDataError() throws Exception {
-        perform(doPost().jsonBody("gibberish string"))
-                .andDo(print())
-                .andExpect(status().isUnprocessableEntity())
-                .andExpect(content().json("{\"errorMessage\":\"HttpMessageNotReadableException\"}"));
-    }
-
-    @Test
-    void errorHandling_notFoundError() throws Exception {
-        perform(doGet(100))
-                .andDo(print())
-                .andExpect(status().isNotFound())
-                .andExpect(content().json("{\"errorMessage\":\"NotFoundException\",\"details\":[\"id=100\"]}"));
-    }
 }
