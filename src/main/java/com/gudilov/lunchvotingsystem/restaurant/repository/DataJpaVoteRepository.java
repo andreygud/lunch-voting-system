@@ -24,7 +24,7 @@ public class DataJpaVoteRepository implements VoteRepository {
 
     @Override
     public Vote save(Vote vote, int userId, int restaurantId) {
-        if (!vote.isNew() && crudVoteRepository.getByIdAndUserId(vote.getId(), userId) == null) {
+        if (!vote.isNew() && get(userId, vote.getId()) == null) {
             return null;
         }
         vote.setRestaurant(crudRestaurantRepository.getOne(restaurantId));
@@ -40,5 +40,15 @@ public class DataJpaVoteRepository implements VoteRepository {
     @Override
     public List<Vote> getAll() {
         return crudVoteRepository.findAll(SORT_ID);
+    }
+
+    @Override
+    public Vote getLast(int userId) {
+        return crudVoteRepository.getDistinctTopByUserIdOrderByVoteTimeDesc(userId);
+    }
+
+    @Override
+    public Vote get(int userId, int id) {
+        return crudVoteRepository.getByUserIdAndId(userId, id);
     }
 }

@@ -45,4 +45,28 @@ class VoteRestControllerTest extends AbstractControllerTest {
                 .andExpect(status().isConflict())
                 .andExpect(content().json(RULE_VIOLATION_JSON));
     }
+
+    @Test
+    void lastVote() throws Exception {
+        perform(doGet("/last"))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(VOTE_VIEW_TO_TEST_MATCHERS.contentJson(INITIAL_USER_VOTE_TO));
+    }
+
+    @Test
+    void get() throws Exception {
+        perform(doGet(USER_UPDATE_VOTE_ID))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(VOTE_VIEW_TO_TEST_MATCHERS.contentJson(INITIAL_USER_VOTE_TO));
+    }
+
+    @Test
+    void get_wronguser() throws Exception {
+        perform(doGet(INITIAL_ADMIN_VOTE_TO.getId()))
+                .andDo(print())
+                .andExpect(status().isNotFound())
+                .andExpect(content().json(NOTFOUND_VOTE_JSON));
+    }
 }

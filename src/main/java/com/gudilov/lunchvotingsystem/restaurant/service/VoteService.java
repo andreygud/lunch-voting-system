@@ -15,6 +15,8 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
 
+import static com.gudilov.lunchvotingsystem.common.utils.ValidationUtil.checkNotFound;
+
 @Service
 public class VoteService {
     protected final Logger log = LoggerFactory.getLogger(getClass());
@@ -29,6 +31,7 @@ public class VoteService {
 
     @Transactional
     public VoteViewTo vote(int userId, int restaurantId) {
+        log.debug("vote userId={} , restId={}", userId,restaurantId);
         if (LocalTime.now().isAfter(LocalTime.of(11, 0))) {
             throw new BusinessRuleViolationException("You cannot vote after 11:00");
         }
@@ -57,4 +60,17 @@ public class VoteService {
         return voteMapper.transformEntityIntoViewTo(voteResult);
     }
 
+    @Transactional
+    public VoteViewTo getLast(int userId){
+        log.debug("getLast userId={}", userId);
+        Vote vote = checkNotFound(voteRepository.getLast(userId),"It seems you haven't voted yet.");
+        return voteMapper.transformEntityIntoViewTo(vote);
+    }
+
+    @Transactional
+    public VoteViewTo get(int userId, int id){
+        log.debug("get userId={} id={}", userId,id);
+        Vote vote = checkNotFound(voteRepository.get(userId,id), "You don't have such vote, or it doesn't belong to you.");
+        return voteMapper.transformEntityIntoViewTo(vote);
+    }
 }

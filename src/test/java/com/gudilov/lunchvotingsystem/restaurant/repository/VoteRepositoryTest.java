@@ -14,6 +14,8 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
 
+import static com.gudilov.lunchvotingsystem.user.UserTestData.USER_ID;
+
 @SpringJUnitConfig(locations = {
         "classpath:spring/spring-db.xml",
         "classpath:spring/spring-app.xml",
@@ -34,12 +36,24 @@ class VoteRepositoryTest {
         vote.setId(100005);
         vote.setVoteTime(LocalDateTime.now().plusHours(10L));
         System.out.println("!!!!!!!" + vote);
-        System.out.println("!!!!!!!" + voteRepository.save(vote, UserTestData.USER_ID, RestaurantTestData.RESTAURANT3_ID));
+        System.out.println("!!!!!!!" + voteRepository.save(vote, USER_ID, RestaurantTestData.RESTAURANT3_ID));
     }
 
     @Test
     void getAllBetweenByUserId() {
-        List<Vote> votes = voteRepository.getAllBetweenByUserId(UserTestData.USER_ID, LocalDateTime.of(LocalDate.now(), LocalTime.MIN), LocalDateTime.of(LocalDate.now(), LocalTime.MAX));
+        List<Vote> votes = voteRepository.getAllBetweenByUserId(USER_ID, LocalDateTime.of(LocalDate.now(), LocalTime.MIN), LocalDateTime.of(LocalDate.now(), LocalTime.MAX));
         System.out.println("!!!!!!!" + votes);
+    }
+
+    @Test
+    void getLast() {
+        Vote vote = voteRepository.getLast(USER_ID);
+        System.out.println(vote);
+    }
+
+    @Test
+    void get() {
+        Vote vote = voteRepository.get(USER_ID,100005);
+        System.out.println(vote);
     }
 }

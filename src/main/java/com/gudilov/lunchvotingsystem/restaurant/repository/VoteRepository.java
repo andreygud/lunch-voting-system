@@ -14,4 +14,10 @@ public interface VoteRepository {
 
     // null if not found
     List<Vote> getAll();
+
+    // null if not found
+    Vote getLast(int userId);
+
+    // null if not found
+    Vote get(int userId,int id);
 }

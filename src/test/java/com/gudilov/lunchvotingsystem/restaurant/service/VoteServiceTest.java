@@ -1,8 +1,10 @@
 package com.gudilov.lunchvotingsystem.restaurant.service;
 
 import com.gudilov.lunchvotingsystem.common.exceptions.BusinessRuleViolationException;
+import com.gudilov.lunchvotingsystem.common.exceptions.NotFoundException;
 import com.gudilov.lunchvotingsystem.restaurant.model.Vote;
 import com.gudilov.lunchvotingsystem.restaurant.repository.VoteRepository;
+import com.gudilov.lunchvotingsystem.restaurant.to.VoteViewTo;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.jdbc.Sql;
@@ -74,5 +76,28 @@ class VoteServiceTest {
         voteService.vote(USER_ID, RESTAURANT1_ID);
         assertEquals(4, voteRepository.getAll().size());
     }
+    //todo check wrong restaurant and user
+    @Test
+    void getLast() {
+        shiftTime(DATE_TIME_BEFORE1100);
+        VoteViewTo actual1 = voteService.getLast(USER_ID);
+        assertEquals(INITIAL_USER_VOTE_TO,actual1);
 
+        shiftTime(NEXTDAY_DATE_TIME_BEFORE1100);
+        voteService.vote(USER_ID,RESTAURANT3_ID);
+
+        VoteViewTo actual2 = voteService.getLast(USER_ID);
+        assertEquals(SUCCESS_VOTE_TO,actual2);
+    }
+
+    @Test
+    void get() {
+        VoteViewTo actual1 = voteService.get(USER_ID,INITIAL_USER_VOTE_TO.getId());
+        assertEquals(INITIAL_USER_VOTE_TO,actual1);
+    }
+
+    @Test
+    void get_wrongUser() {
+        assertThrows(NotFoundException.class,()->voteService.get(ADMIN_ID,INITIAL_USER_VOTE_TO.getId()));
+    }
 }
