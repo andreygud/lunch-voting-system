@@ -1,3 +1,4 @@
+DROP TABLE IF EXISTS vote;
 DROP TABLE IF EXISTS user_roles;
 DROP TABLE IF EXISTS users;
 DROP TABLE IF EXISTS restaurant;
@@ -7,7 +8,7 @@ CREATE SEQUENCE global_seq START WITH 100000 INCREMENT BY 1;
 
 CREATE TABLE users
 (
-    id         INTEGER   default global_seq.NEXTVAL PRIMARY KEY,
+    id         INTEGER   DEFAULT global_seq.NEXTVAL PRIMARY KEY,
     name       VARCHAR(255)            NOT NULL,
     email      VARCHAR(255)            NOT NULL,
     password   VARCHAR(255)            NOT NULL,
@@ -26,9 +27,19 @@ CREATE TABLE user_roles
 );
 
 CREATE TABLE restaurant
-  (
-      id          INTEGER default global_seq.NEXTVAL PRIMARY KEY,
-      name        VARCHAR(255) NOT NULL,
-      description VARCHAR(1000),
-      address     VARCHAR(255)
-  );
+(
+    id          INTEGER DEFAULT global_seq.NEXTVAL PRIMARY KEY,
+    name        VARCHAR(255) NOT NULL,
+    description VARCHAR(1000),
+    address     VARCHAR(255)
+);
+
+CREATE TABLE vote
+(
+    id            INTEGER   DEFAULT global_seq.NEXTVAL PRIMARY KEY,
+    user_id       INTEGER                 NOT NULL,
+    restaurant_id INTEGER                 NOT NULL,
+    vote_time     TIMESTAMP DEFAULT now() NOT NULL,
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
+    FOREIGN KEY (restaurant_id) REFERENCES restaurant(id) ON DELETE CASCADE
+);

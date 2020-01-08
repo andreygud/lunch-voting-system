@@ -1,5 +1,6 @@
 package com.gudilov.lunchvotingsystem.common.web.errorhandling;
 
+import com.gudilov.lunchvotingsystem.common.exceptions.BusinessRuleViolationException;
 import com.gudilov.lunchvotingsystem.common.exceptions.IllegalRequestDataException;
 import com.gudilov.lunchvotingsystem.common.exceptions.NotFoundException;
 import com.gudilov.lunchvotingsystem.common.utils.ValidationUtil;
@@ -24,8 +25,8 @@ public class RestErrorHandler {
     private static Logger log = LoggerFactory.getLogger(RestErrorHandler.class);
 
     @ResponseStatus(value = HttpStatus.CONFLICT)  // 409
-    @ExceptionHandler(DataIntegrityViolationException.class)
-    public ErrorInfo conflict(HttpServletRequest req, DataIntegrityViolationException e) {
+    @ExceptionHandler({DataIntegrityViolationException.class, BusinessRuleViolationException.class})
+    public ErrorInfo conflict(HttpServletRequest req, Exception e) {
         return logAndGetErrorInfo(req, e);
     }
 
