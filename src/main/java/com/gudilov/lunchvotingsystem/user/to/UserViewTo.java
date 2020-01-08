@@ -85,20 +85,22 @@ public class UserViewTo extends BaseTo implements HasEmail, Serializable {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
 
         UserViewTo that = (UserViewTo) o;
 
         if (enabled != that.enabled) return false;
-        if (!name.equals(that.name)) return false;
-        if (!email.equals(that.email)) return false;
+        if (name != null ? !name.equals(that.name) : that.name != null) return false;
+        if (email != null ? !email.equals(that.email) : that.email != null) return false;
         if (registered != null ? !registered.equals(that.registered) : that.registered != null) return false;
         return roles != null ? roles.equals(that.roles) : that.roles == null;
     }
 
     @Override
     public int hashCode() {
-        int result = name.hashCode();
-        result = 31 * result + email.hashCode();
+        int result = super.hashCode();
+        result = 31 * result + (name != null ? name.hashCode() : 0);
+        result = 31 * result + (email != null ? email.hashCode() : 0);
         result = 31 * result + (enabled ? 1 : 0);
         result = 31 * result + (registered != null ? registered.hashCode() : 0);
         result = 31 * result + (roles != null ? roles.hashCode() : 0);

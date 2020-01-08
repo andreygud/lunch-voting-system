@@ -16,7 +16,6 @@ import java.util.stream.Collectors;
 
 import static com.gudilov.lunchvotingsystem.common.utils.ValidationUtil.getRootCause;
 import static com.gudilov.lunchvotingsystem.restaurant.RestaurantTestData.*;
-import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -36,7 +35,7 @@ class RestaurantServiceTest {
         RestaurantTo createdRestaurant = restaurantService.create(RestaurantTestData.RESTAURANT_CREATE_TO);
         List<RestaurantTo> usersAfter = restaurantService.getAll();
 
-        RESTAURANT_TO_TEST_MATCHERS.assertMatch(createdRestaurant, RESTAURANT_CREATED_TO);
+        assertEquals(RESTAURANT_CREATED_TO, createdRestaurant);
         assertEquals(restaurantsBefore.size() + 1, usersAfter.size());
     }
 
@@ -48,8 +47,7 @@ class RestaurantServiceTest {
                         .getConstraintViolations().stream().map(ConstraintViolation::getMessage)
                         .collect(Collectors.toSet());
 
-        assertThat(constraintViolations)
-                .isEqualTo(RESTAURANT_CREATION_VIOLATIONS);
+        assertEquals(RESTAURANT_CREATION_VIOLATIONS, constraintViolations);
     }
 
     @Test
@@ -60,24 +58,24 @@ class RestaurantServiceTest {
         RestaurantTo expected = new RestaurantTo(RESTAURANT1_TO);
         expected.setName("New Name");
 
-        RESTAURANT_TO_TEST_MATCHERS.assertMatch(actualUpdated, expected);
+        assertEquals(expected, actualUpdated);
     }
 
     @Test
     void delete() {
         restaurantService.delete(RESTAURANT1_ID);
-        RESTAURANT_TO_TEST_MATCHERS.assertMatch(restaurantService.getAll(), RESTAURANT3_TO, RESTAURANT2_TO);
+        assertEquals(List.of(RESTAURANT3_TO, RESTAURANT2_TO), restaurantService.getAll());
     }
 
     @Test
     void get() {
         RestaurantTo userActual = restaurantService.get(RESTAURANT1_ID);
-        RESTAURANT_TO_TEST_MATCHERS.assertMatch(userActual, RESTAURANT1_TO);
+        assertEquals(RESTAURANT1_TO, userActual);
     }
 
     @Test
     void getAll() {
         List<RestaurantTo> usersActual = restaurantService.getAll();
-        RESTAURANT_TO_TEST_MATCHERS.assertMatch(usersActual, RESTAURANT1_TO, RESTAURANT3_TO, RESTAURANT2_TO);
+        assertEquals(List.of(RESTAURANT1_TO, RESTAURANT3_TO, RESTAURANT2_TO), usersActual);
     }
 }

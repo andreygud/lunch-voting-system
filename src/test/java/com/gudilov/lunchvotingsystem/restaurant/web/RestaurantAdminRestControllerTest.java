@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import static com.gudilov.lunchvotingsystem.restaurant.RestaurantTestData.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
@@ -42,7 +43,7 @@ class RestaurantAdminRestControllerTest extends AbstractControllerTest {
                 .andExpect(status().isNoContent());
         RestaurantTo updatedActual = restaurantService.get(RESTAURANT1_ID);
 
-        RESTAURANT_TO_TEST_MATCHERS.assertMatch(updatedActual, updatedToExpected);
+        assertEquals(updatedToExpected, updatedActual);
     }
 
     @Test
@@ -53,7 +54,7 @@ class RestaurantAdminRestControllerTest extends AbstractControllerTest {
 
         RestaurantTo createdViewToActual = restaurantService.get(RESTAURANT_CREATED_ID);
 
-        RESTAURANT_TO_TEST_MATCHERS.assertMatch(createdViewToActual, RESTAURANT_CREATED_TO);
+        assertEquals(RESTAURANT_CREATED_TO, createdViewToActual);
     }
 
     @Test

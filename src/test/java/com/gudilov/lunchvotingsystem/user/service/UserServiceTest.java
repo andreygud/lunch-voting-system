@@ -18,7 +18,6 @@ import java.util.stream.Collectors;
 
 import static com.gudilov.lunchvotingsystem.common.utils.ValidationUtil.getRootCause;
 import static com.gudilov.lunchvotingsystem.user.UserTestData.*;
-import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringJUnitConfig(locations = {
@@ -51,15 +50,13 @@ class UserServiceTest {
 
     @Test
     void create_inputFieldsValidation() {
-
         Set<String> constraintViolations =
                 ((ConstraintViolationException) getRootCause(
                         assertThrows(Exception.class, () -> userService.create(WRONG_ALL_INPUT_USER_CTO))))
                 .getConstraintViolations().stream().map(ConstraintViolation::getMessage)
                 .collect(Collectors.toSet());
 
-        assertThat(constraintViolations)
-                .isEqualTo(VIOLATED_VALIDATIONS_CTO);
+        assertEquals(VIOLATED_VALIDATIONS_CTO, constraintViolations);
     }
 
     @Test

@@ -84,4 +84,28 @@ public class UserCreateTo extends BaseTo implements HasEmail, Serializable {
                 ", roles='" + roles + '\'' +
                 '}';
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
+
+        UserCreateTo createTo = (UserCreateTo) o;
+
+        if (name != null ? !name.equals(createTo.name) : createTo.name != null) return false;
+        if (email != null ? !email.equals(createTo.email) : createTo.email != null) return false;
+        if (password != null ? !password.equals(createTo.password) : createTo.password != null) return false;
+        return roles != null ? roles.equals(createTo.roles) : createTo.roles == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = super.hashCode();
+        result = 31 * result + (name != null ? name.hashCode() : 0);
+        result = 31 * result + (email != null ? email.hashCode() : 0);
+        result = 31 * result + (password != null ? password.hashCode() : 0);
+        result = 31 * result + (roles != null ? roles.hashCode() : 0);
+        return result;
+    }
 }
