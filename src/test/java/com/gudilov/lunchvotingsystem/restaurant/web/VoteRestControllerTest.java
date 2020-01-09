@@ -3,6 +3,8 @@ package com.gudilov.lunchvotingsystem.restaurant.web;
 import com.gudilov.lunchvotingsystem.common.web.AbstractControllerTest;
 import org.junit.jupiter.api.Test;
 
+import java.time.LocalDate;
+
 import static com.gudilov.lunchvotingsystem.common.utils.TestUtil.shiftTime;
 import static com.gudilov.lunchvotingsystem.restaurant.RestaurantTestData.RESTAURANT3_ID;
 import static com.gudilov.lunchvotingsystem.restaurant.VoteTestData.*;
@@ -68,5 +70,21 @@ class VoteRestControllerTest extends AbstractControllerTest {
                 .andDo(print())
                 .andExpect(status().isNotFound())
                 .andExpect(content().json(NOTFOUND_VOTE_JSON));
+    }
+
+    @Test
+    void votingResult() throws Exception {
+        perform(doGet("result"))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(content().json(VOTING_RESULTS_JSON));
+    }
+
+    @Test
+    void votingResult_withDate() throws Exception {
+        perform(doGet("result?date" + LocalDate.now().toString()))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(content().json(VOTING_RESULTS_JSON));
     }
 }

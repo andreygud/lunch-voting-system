@@ -35,4 +35,5 @@ public class VoteTestData {
     public static final String NOTFOUND_VOTE_JSON = "{\"errorMessage\":\"NotFoundException\",\"details\":[\"You don't have such vote, or it doesn't belong to you.\"]}";
 
     public static final TestMatchers<VoteViewTo> VOTE_VIEW_TO_TEST_MATCHERS = TestMatchers.useFieldsComparator(VoteViewTo.class);
+    public static final String VOTING_RESULTS_JSON = "[{\"restaurantId\":100002,\"restaurantName\":\"Cactus Club Cafe Kingsway\",\"votesCount\":1},{\"restaurantId\":100003,\"restaurantName\":\"Original Joe's Restaurant & Bar\",\"votesCount\":1}]";
 }
