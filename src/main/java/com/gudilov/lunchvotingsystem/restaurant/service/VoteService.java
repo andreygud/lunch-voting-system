@@ -53,10 +53,7 @@ public class VoteService {
                 throw new IllegalStateException("There are more than 1 vote per day in the database. Please contact your administrator.");
         }
 
-        Vote voteResult = voteRepository.save(vote, userId, restaurantId);
-        if (voteResult == null) {
-            throw new IllegalStateException("Vote didn't go through. Please contact your administrator.");
-        }
+        Vote voteResult = checkNotFound(voteRepository.save(vote, userId, restaurantId),"Vote didn't go through. Please contact your administrator.");
         return voteMapper.transformEntityIntoViewTo(voteResult);
     }
 

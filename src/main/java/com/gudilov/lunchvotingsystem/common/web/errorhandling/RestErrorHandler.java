@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
+import javax.persistence.EntityNotFoundException;
 import javax.servlet.http.HttpServletRequest;
 
 @RestControllerAdvice(annotations = RestController.class)
@@ -32,8 +33,8 @@ public class RestErrorHandler {
 
 
     @ResponseStatus(value = HttpStatus.NOT_FOUND)  // 409
-    @ExceptionHandler(NotFoundException.class)
-    public ErrorInfo notFoundError(HttpServletRequest req, NotFoundException e) {
+    @ExceptionHandler({NotFoundException.class, EntityNotFoundException.class})
+    public ErrorInfo notFoundError(HttpServletRequest req, Exception e) {
         return logAndGetErrorInfo(req, e);
     }
 

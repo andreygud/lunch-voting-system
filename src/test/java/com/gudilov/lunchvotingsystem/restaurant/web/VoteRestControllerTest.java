@@ -49,6 +49,16 @@ class VoteRestControllerTest extends AbstractControllerTest {
     }
 
     @Test
+    void vote_nonExistingRestaurant() throws Exception {
+        shiftTime(NEXTDAY_DATE_TIME_BEFORE1100);
+
+        perform(doPost(Integer.toString(100012)))
+                .andDo(print())
+                .andExpect(status().isNotFound())
+                .andExpect(content().json(NOT_FOUND_RESTAURANT_JSON));
+    }
+
+    @Test
     void lastVote() throws Exception {
         perform(doGet("/last"))
                 .andDo(print())
