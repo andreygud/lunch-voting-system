@@ -16,7 +16,7 @@ public class RestaurantTestData {
     public static final RestaurantTo RESTAURANT3_TO = new RestaurantTo(RESTAURANT3_ID, "Hi Genki Restaurant", "Sushi", "6680 Southoaks Crescent, Burnaby");
 
 
-    public static final int RESTAURANT_CREATED_ID = 100007;
+    public static final int RESTAURANT_CREATED_ID = 100015;
     public static final RestaurantTo RESTAURANT_CREATE_TO = new RestaurantTo(null, "Sams Kitchen", "just simple food", "behind the yellow building");
     public static final RestaurantTo RESTAURANT_WRONG_ALL_INPUT_CREATE_TO = new RestaurantTo(null, "S", null, "beh");
     public static final RestaurantTo RESTAURANT_CREATED_TO = new RestaurantTo(RESTAURANT_CREATED_ID, "Sams Kitchen", "just simple food", "behind the yellow building");

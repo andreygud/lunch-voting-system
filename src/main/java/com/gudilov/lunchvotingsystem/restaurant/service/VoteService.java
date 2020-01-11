@@ -2,7 +2,7 @@ package com.gudilov.lunchvotingsystem.restaurant.service;
 
 import com.gudilov.lunchvotingsystem.common.exceptions.BusinessRuleViolationException;
 import com.gudilov.lunchvotingsystem.restaurant.model.Vote;
-import com.gudilov.lunchvotingsystem.restaurant.repository.VoteRepository;
+import com.gudilov.lunchvotingsystem.restaurant.repository.vote.VoteRepository;
 import com.gudilov.lunchvotingsystem.restaurant.service.mapper.VoteMapper;
 import com.gudilov.lunchvotingsystem.restaurant.to.VoteViewTo;
 import org.slf4j.Logger;
@@ -19,6 +19,7 @@ import static com.gudilov.lunchvotingsystem.common.utils.ValidationUtil.checkNot
 
 @Service
 public class VoteService {
+    public static final LocalTime CUT_OFF_TIME = LocalTime.of(11, 0);
     protected final Logger log = LoggerFactory.getLogger(getClass());
 
     private VoteMapper voteMapper;
@@ -32,7 +33,7 @@ public class VoteService {
     @Transactional
     public VoteViewTo vote(int userId, int restaurantId) {
         log.debug("vote userId={} , restId={}", userId,restaurantId);
-        if (LocalTime.now().isAfter(LocalTime.of(11, 0))) {
+        if (LocalTime.now().isAfter(CUT_OFF_TIME)) {
             throw new BusinessRuleViolationException("You cannot vote after 11:00");
         }
 

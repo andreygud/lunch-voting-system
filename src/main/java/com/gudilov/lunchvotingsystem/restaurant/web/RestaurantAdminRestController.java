@@ -12,8 +12,6 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import javax.validation.Valid;
 import java.net.URI;
 
-import static com.gudilov.lunchvotingsystem.common.utils.ValidationUtil.assureIdConsistent;
-
 @RestController
 @RequestMapping(RestaurantAdminRestController.REST_URL)
 public class RestaurantAdminRestController {
@@ -39,8 +37,7 @@ public class RestaurantAdminRestController {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void update(@Valid @RequestBody RestaurantTo restaurantTo, @PathVariable int id) {
         log.debug("rest update RestaurantTo={}", restaurantTo);
-        assureIdConsistent(restaurantTo, id);
-        restaurantService.update(restaurantTo);
+        restaurantService.update(restaurantTo, id);
     }
 
     @PostMapping

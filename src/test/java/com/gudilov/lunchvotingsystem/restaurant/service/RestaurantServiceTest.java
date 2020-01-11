@@ -53,7 +53,7 @@ class RestaurantServiceTest {
     @Test
     void update_changeName() {
         RestaurantTo updatedName = new RestaurantTo(RESTAURANT1_ID, "New Name", null, null);
-        restaurantService.update(updatedName);
+        restaurantService.update(updatedName, RESTAURANT1_ID);
         RestaurantTo actualUpdated = restaurantService.get(RESTAURANT1_ID);
         RestaurantTo expected = new RestaurantTo(RESTAURANT1_TO);
         expected.setName("New Name");

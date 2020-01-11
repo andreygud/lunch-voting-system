@@ -3,7 +3,7 @@ package com.gudilov.lunchvotingsystem.restaurant.service;
 import com.gudilov.lunchvotingsystem.common.exceptions.BusinessRuleViolationException;
 import com.gudilov.lunchvotingsystem.common.exceptions.NotFoundException;
 import com.gudilov.lunchvotingsystem.restaurant.model.Vote;
-import com.gudilov.lunchvotingsystem.restaurant.repository.VoteRepository;
+import com.gudilov.lunchvotingsystem.restaurant.repository.vote.VoteRepository;
 import com.gudilov.lunchvotingsystem.restaurant.to.VoteViewTo;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

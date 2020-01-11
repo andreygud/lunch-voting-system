@@ -1,4 +1,4 @@
-package com.gudilov.lunchvotingsystem.restaurant.repository;
+package com.gudilov.lunchvotingsystem.restaurant.repository.vote;
 
 import com.gudilov.lunchvotingsystem.restaurant.model.Vote;
 import org.springframework.data.jpa.repository.JpaRepository;

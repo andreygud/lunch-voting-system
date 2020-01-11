@@ -1,8 +1,10 @@
 package com.gudilov.lunchvotingsystem.restaurant.to;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
-public class VotingResultTo {
+public class VotingResultTo implements Serializable {
+    private static final long serialVersionUID = 1L;
 
     private LocalDateTime dateTime;
     private int restaurantId;

@@ -12,7 +12,7 @@ import static com.gudilov.lunchvotingsystem.user.UserTestData.USER;
 
 public class VoteTestData {
 
-    public static final int USER_CREATED_VOTE_ID = 100007;
+    public static final int USER_CREATED_VOTE_ID = 100015;
     public static final int USER_UPDATE_VOTE_ID = 100005;
 
     public static final LocalTime INITIAL_USER_VOTE_TIME = LocalTime.of(9, 47,52,690000000);

@@ -1,6 +1,7 @@
 DROP TABLE IF EXISTS vote;
 DROP TABLE IF EXISTS user_roles;
 DROP TABLE IF EXISTS users;
+DROP TABLE IF EXISTS menu_item;
 DROP TABLE IF EXISTS restaurant;
 DROP SEQUENCE IF EXISTS global_seq;
 
@@ -40,6 +41,16 @@ CREATE TABLE vote
     user_id       INTEGER                 NOT NULL,
     restaurant_id INTEGER                 NOT NULL,
     vote_time     TIMESTAMP DEFAULT now() NOT NULL,
-    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
-    FOREIGN KEY (restaurant_id) REFERENCES restaurant(id) ON DELETE CASCADE
+    FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE,
+    FOREIGN KEY (restaurant_id) REFERENCES restaurant (id) ON DELETE CASCADE
+);
+
+CREATE TABLE menu_item
+(
+    id            INTEGER DEFAULT global_seq.NEXTVAL PRIMARY KEY,
+    restaurant_id INTEGER        NOT NULL,
+    name          VARCHAR(255)   NOT NULL,
+    price         DECIMAL(10, 2) NOT NULL,
+    menu_date     DATE    DEFAULT today,
+    FOREIGN KEY (restaurant_id) REFERENCES restaurant (id) ON DELETE CASCADE
 );

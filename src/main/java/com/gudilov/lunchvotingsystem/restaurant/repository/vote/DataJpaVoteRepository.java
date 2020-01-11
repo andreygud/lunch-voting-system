@@ -1,6 +1,7 @@
-package com.gudilov.lunchvotingsystem.restaurant.repository;
+package com.gudilov.lunchvotingsystem.restaurant.repository.vote;
 
 import com.gudilov.lunchvotingsystem.restaurant.model.Vote;
+import com.gudilov.lunchvotingsystem.restaurant.repository.restaurant.CrudRestaurantRepository;
 import com.gudilov.lunchvotingsystem.user.repository.CrudUserRepository;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Repository;

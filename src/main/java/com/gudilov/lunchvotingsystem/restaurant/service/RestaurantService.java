@@ -1,7 +1,7 @@
 package com.gudilov.lunchvotingsystem.restaurant.service;
 
 import com.gudilov.lunchvotingsystem.restaurant.model.Restaurant;
-import com.gudilov.lunchvotingsystem.restaurant.repository.RestaurantRepository;
+import com.gudilov.lunchvotingsystem.restaurant.repository.restaurant.RestaurantRepository;
 import com.gudilov.lunchvotingsystem.restaurant.service.mapper.RestaurantMapper;
 import com.gudilov.lunchvotingsystem.restaurant.to.RestaurantTo;
 import org.slf4j.Logger;
@@ -11,8 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-import static com.gudilov.lunchvotingsystem.common.utils.ValidationUtil.checkNew;
-import static com.gudilov.lunchvotingsystem.common.utils.ValidationUtil.checkNotFoundWithId;
+import static com.gudilov.lunchvotingsystem.common.utils.ValidationUtil.*;
 import static org.springframework.util.Assert.notNull;
 
 @Service
@@ -36,10 +35,10 @@ public class RestaurantService {
     }
 
     @Transactional
-    public void update(RestaurantTo restaurantTo) {
+    public void update(RestaurantTo restaurantTo, int id) {
         log.debug("update {}", restaurantTo);
         notNull(restaurantTo, "restaurant must not be null");
-
+        assureIdConsistent(restaurantTo, id);
         Restaurant restaurant = checkNotFoundWithId(restaurantRepository.get(restaurantTo.getId()), restaurantTo.getId());
         restaurantMapper.updateExistingEntity(restaurantTo, restaurant);
     }

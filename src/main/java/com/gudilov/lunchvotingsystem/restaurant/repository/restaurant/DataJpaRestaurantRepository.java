@@ -1,4 +1,4 @@
-package com.gudilov.lunchvotingsystem.restaurant.repository;
+package com.gudilov.lunchvotingsystem.restaurant.repository.restaurant;
 
 import com.gudilov.lunchvotingsystem.restaurant.model.Restaurant;
 import org.springframework.data.domain.Sort;
