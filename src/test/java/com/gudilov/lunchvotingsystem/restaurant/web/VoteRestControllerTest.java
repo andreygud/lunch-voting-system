@@ -97,4 +97,12 @@ class VoteRestControllerTest extends AbstractControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(content().json(VOTING_RESULTS_JSON));
     }
+
+    @Test
+    void votingHistory() throws Exception {
+        perform(doGet("history?date" + LocalDate.now().toString()))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(content().json(VOTING_HISTORY_JSON));
+    }
 }

@@ -1,9 +1,10 @@
 package com.gudilov.lunchvotingsystem.restaurant.web;
 
 import com.gudilov.lunchvotingsystem.common.utils.SecurityUtil;
-import com.gudilov.lunchvotingsystem.restaurant.service.ReportingService;
+import com.gudilov.lunchvotingsystem.restaurant.reports.ReportingRepository;
 import com.gudilov.lunchvotingsystem.restaurant.service.VoteService;
 import com.gudilov.lunchvotingsystem.restaurant.to.VoteViewTo;
+import com.gudilov.lunchvotingsystem.restaurant.to.VotingHistoryTo;
 import com.gudilov.lunchvotingsystem.restaurant.to.VotingResultTo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,11 +23,11 @@ public class VoteRestController {
     static final String REST_URL = "/rest/vote";
 
     VoteService voteService;
-    ReportingService reportingService;
+    ReportingRepository reportingRepository;
 
-    public VoteRestController(VoteService voteService, ReportingService reportingService) {
+    public VoteRestController(VoteService voteService, ReportingRepository reportingRepository) {
         this.voteService = voteService;
-        this.reportingService = reportingService;
+        this.reportingRepository = reportingRepository;
     }
 
     @PostMapping("")
@@ -60,7 +61,18 @@ public class VoteRestController {
         if (date == null) {
             date = LocalDate.now();
         }
-        return reportingService.votingResult(date);
+        return reportingRepository.getVotingResults(date);
+    }
+
+    @GetMapping("/history")
+    public List<VotingHistoryTo> votingHistory(
+            @RequestParam @Nullable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate start) {
+        log.debug("rest votinghistory start={}", start);
+        int userId = SecurityUtil.authorizedUser();
+        if (start == null) {
+            start = LocalDate.now();
+        }
+        return reportingRepository.getVotingHistory(userId, start);
     }
 }
 

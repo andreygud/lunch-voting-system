@@ -1,6 +1,8 @@
 package com.gudilov.lunchvotingsystem.restaurant.reports;
 
+import com.gudilov.lunchvotingsystem.restaurant.to.VotingHistoryTo;
 import com.gudilov.lunchvotingsystem.restaurant.to.VotingResultTo;
+import com.gudilov.lunchvotingsystem.user.UserTestData;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.jdbc.Sql;
@@ -23,5 +25,11 @@ class ReportingRepositoryTest {
     void getVotingResults() {
         List<VotingResultTo> list = repository.getVotingResults(LocalDate.now());
         System.out.println(list);
+    }
+
+    @Test
+    void getVotingHistory() {
+        List<VotingHistoryTo> history = repository.getVotingHistory(UserTestData.USER_ID, LocalDate.now().minusDays(2));
+        System.out.println(history);
     }
 }
