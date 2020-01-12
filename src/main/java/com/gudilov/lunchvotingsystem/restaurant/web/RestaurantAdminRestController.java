@@ -1,6 +1,9 @@
 package com.gudilov.lunchvotingsystem.restaurant.web;
 
+import com.gudilov.lunchvotingsystem.restaurant.service.MenuItemService;
 import com.gudilov.lunchvotingsystem.restaurant.service.RestaurantService;
+import com.gudilov.lunchvotingsystem.restaurant.to.MenuItemTo;
+import com.gudilov.lunchvotingsystem.restaurant.to.MenuItemViewTo;
 import com.gudilov.lunchvotingsystem.restaurant.to.RestaurantTo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,11 +23,12 @@ public class RestaurantAdminRestController {
     static final String REST_URL = "/rest/admin/restaurant";
 
     RestaurantService restaurantService;
+    MenuItemService menuItemService;
 
-    public RestaurantAdminRestController(RestaurantService restaurantService) {
+    public RestaurantAdminRestController(RestaurantService restaurantService, MenuItemService menuItemService) {
         this.restaurantService = restaurantService;
+        this.menuItemService = menuItemService;
     }
-
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
@@ -50,6 +54,25 @@ public class RestaurantAdminRestController {
                 .path(REST_URL + "/{id}")
                 .buildAndExpand(restaurant.getId()).toUri();
         return ResponseEntity.created(uriOfNewResource).body(restaurant);
+    }
+
+    @PostMapping("/{id}/menu")
+    @ResponseStatus(HttpStatus.CREATED)
+    public ResponseEntity<MenuItemViewTo> createMenuItem(@Valid @RequestBody MenuItemTo menuItemTo, @PathVariable int id) {
+        log.debug("rest create menuitem restId={}", id);
+        MenuItemViewTo menuItemViewTo = menuItemService.create(menuItemTo, id);
+
+        URI uriOfNewResource = ServletUriComponentsBuilder.fromCurrentContextPath()
+                .path(MenuItemRestController.REST_URL + "/{miId}")
+                .buildAndExpand(menuItemViewTo.getId()).toUri();
+        return ResponseEntity.created(uriOfNewResource).body(menuItemViewTo);
+    }
+
+    @DeleteMapping("/{id}/menu")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteMenu(@PathVariable int id) {
+        log.debug("rest restaurant delete Menu restId={}", id);
+        menuItemService.deleteAll(id);
     }
 }
 

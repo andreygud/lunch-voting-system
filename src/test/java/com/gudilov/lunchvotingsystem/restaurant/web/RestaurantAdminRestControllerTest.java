@@ -2,11 +2,13 @@ package com.gudilov.lunchvotingsystem.restaurant.web;
 
 import com.gudilov.lunchvotingsystem.common.exceptions.NotFoundException;
 import com.gudilov.lunchvotingsystem.common.web.AbstractControllerTest;
+import com.gudilov.lunchvotingsystem.restaurant.service.MenuItemService;
 import com.gudilov.lunchvotingsystem.restaurant.service.RestaurantService;
 import com.gudilov.lunchvotingsystem.restaurant.to.RestaurantTo;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import static com.gudilov.lunchvotingsystem.restaurant.MenuItemTestData.*;
 import static com.gudilov.lunchvotingsystem.restaurant.RestaurantTestData.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -18,6 +20,9 @@ class RestaurantAdminRestControllerTest extends AbstractControllerTest {
 
     @Autowired
     RestaurantService restaurantService;
+
+    @Autowired
+    MenuItemService itemService;
 
     public RestaurantAdminRestControllerTest() {
         super(RestaurantAdminRestController.REST_URL);
@@ -71,5 +76,25 @@ class RestaurantAdminRestControllerTest extends AbstractControllerTest {
                 .andDo(print())
                 .andExpect(status().isUnprocessableEntity())
                 .andExpect(content().json(WRONG_INPUT_JSON));
+    }
+
+    @Test
+    void createMenuItem() throws Exception {
+        perform(doPost(RESTAURANT1_ID + "/menu").jsonBody(CACTUS_ITEM_NEW_TO))
+                .andDo(print())
+                .andExpect(status().isCreated())
+                .andExpect(ITEM_TO_TEST_MATCHERS.contentJson(CACTUS_ITEM_NEW_VIEW_TO));
+    }
+
+
+    @Test
+    void deleteMenu() throws Exception {
+        perform(doDelete(RESTAURANT1_ID + "/menu"))
+                .andDo(print())
+                .andExpect(status().isNoContent());
+
+        int after = itemService.getAll(RESTAURANT1_ID).size();
+
+        assertEquals(0, after);
     }
 }

@@ -1,6 +1,8 @@
 package com.gudilov.lunchvotingsystem.restaurant.web;
 
+import com.gudilov.lunchvotingsystem.restaurant.service.MenuItemService;
 import com.gudilov.lunchvotingsystem.restaurant.service.RestaurantService;
+import com.gudilov.lunchvotingsystem.restaurant.to.MenuItemViewTo;
 import com.gudilov.lunchvotingsystem.restaurant.to.RestaurantTo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,9 +21,11 @@ public class RestaurantRestController {
     static final String REST_URL = "/rest/restaurant";
 
     RestaurantService restaurantService;
+    MenuItemService menuItemService;
 
-    public RestaurantRestController(RestaurantService restaurantService) {
+    public RestaurantRestController(RestaurantService restaurantService, MenuItemService menuItemService) {
         this.restaurantService = restaurantService;
+        this.menuItemService = menuItemService;
     }
 
     @GetMapping("/{id}")
@@ -34,6 +38,12 @@ public class RestaurantRestController {
     public List<RestaurantTo> getAll() {
         log.debug("rest getAll");
         return restaurantService.getAll();
+    }
+
+    @GetMapping("/{id}/menu")
+    public List<MenuItemViewTo> getMenu(@PathVariable int id) {
+        log.debug("rest get menu  restaurant id={}", id);
+        return menuItemService.getAll(id);
     }
 }
 
