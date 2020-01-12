@@ -30,7 +30,7 @@ public class UserAdminRestController {
         this.userService = userService;
     }
 
-    @GetMapping
+    @GetMapping("")
     public List<UserViewTo> getAll() {
         log.debug("rest getALL");
         return userService.getAll();
@@ -57,7 +57,7 @@ public class UserAdminRestController {
         userService.update(userUpdateTo);
     }
 
-    @PostMapping
+    @PostMapping("")
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<UserViewTo> create(@Valid @RequestBody UserCreateTo userCreateTo) {
         log.debug("rest create userTo={}", userCreateTo);

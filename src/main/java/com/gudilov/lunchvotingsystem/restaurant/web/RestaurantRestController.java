@@ -34,7 +34,7 @@ public class RestaurantRestController {
         return restaurantService.get(id);
     }
 
-    @GetMapping
+    @GetMapping("")
     public List<RestaurantTo> getAll() {
         log.debug("rest getAll");
         return restaurantService.getAll();

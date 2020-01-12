@@ -44,7 +44,7 @@ public class RestaurantAdminRestController {
         restaurantService.update(restaurantTo, id);
     }
 
-    @PostMapping
+    @PostMapping("")
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<RestaurantTo> create(@Valid @RequestBody RestaurantTo restaurantTo) {
         log.debug("rest create RestaurantTo={}", restaurantTo);

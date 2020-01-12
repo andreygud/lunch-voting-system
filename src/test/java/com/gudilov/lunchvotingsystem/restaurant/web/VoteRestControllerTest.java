@@ -22,7 +22,7 @@ class VoteRestControllerTest extends AbstractControllerTest {
     void vote_success() throws Exception {
         shiftTime(NEXTDAY_DATE_TIME_BEFORE1100);
 
-        perform(doPost(Integer.toString(RESTAURANT3_ID)))
+        perform(doPost("?restaurantId="+RESTAURANT3_ID))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(VOTE_VIEW_TO_TEST_MATCHERS.contentJson(SUCCESS_VOTE_TO));
@@ -32,7 +32,7 @@ class VoteRestControllerTest extends AbstractControllerTest {
     void vote_update_success() throws Exception {
         shiftTime(DATE_TIME_BEFORE1100);
 
-        perform(doPost(Integer.toString(RESTAURANT3_ID)))
+        perform(doPost("?restaurantId="+RESTAURANT3_ID))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(VOTE_VIEW_TO_TEST_MATCHERS.contentJson(SUCCESS_UPDATE_VOTE_TO));
@@ -42,7 +42,7 @@ class VoteRestControllerTest extends AbstractControllerTest {
     void vote_update_fail() throws Exception {
         shiftTime(DATE_TIME_AFTER1100);
 
-        perform(doPost(Integer.toString(RESTAURANT3_ID)))
+        perform(doPost("?restaurantId="+RESTAURANT3_ID))
                 .andDo(print())
                 .andExpect(status().isConflict())
                 .andExpect(content().json(RULE_VIOLATION_JSON));
@@ -52,7 +52,7 @@ class VoteRestControllerTest extends AbstractControllerTest {
     void vote_nonExistingRestaurant() throws Exception {
         shiftTime(NEXTDAY_DATE_TIME_BEFORE1100);
 
-        perform(doPost(Integer.toString(100012)))
+        perform(doPost("?restaurantId="+100012))
                 .andDo(print())
                 .andExpect(status().isNotFound())
                 .andExpect(content().json(NOT_FOUND_RESTAURANT_JSON));

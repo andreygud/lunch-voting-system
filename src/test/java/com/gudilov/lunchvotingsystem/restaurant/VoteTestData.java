@@ -36,5 +36,5 @@ public class VoteTestData {
 
     public static final TestMatchers<VoteViewTo> VOTE_VIEW_TO_TEST_MATCHERS = TestMatchers.useFieldsComparator(VoteViewTo.class);
     public static final String VOTING_RESULTS_JSON = "[{\"restaurantId\":100002,\"restaurantName\":\"Cactus Club Cafe Kingsway\",\"votesCount\":1},{\"restaurantId\":100003,\"restaurantName\":\"Original Joe's Restaurant & Bar\",\"votesCount\":1}]";
-    public static final String NOT_FOUND_RESTAURANT_JSON = "{\"url\":\"http://localhost/rest/vote/100012\",\"errorMessage\":\"EntityNotFoundException\",\"details\":[\"Unable to find com.gudilov.lunchvotingsystem.restaurant.model.Restaurant with id 100012\"]}";
+    public static final String NOT_FOUND_RESTAURANT_JSON = "{\"errorMessage\":\"EntityNotFoundException\",\"details\":[\"Unable to find com.gudilov.lunchvotingsystem.restaurant.model.Restaurant with id 100012\"]}";
 }

@@ -29,8 +29,8 @@ public class VoteRestController {
         this.reportingService = reportingService;
     }
 
-    @PostMapping("/{restaurantId}")
-    public VoteViewTo vote(@PathVariable int restaurantId) {
+    @PostMapping("")
+    public VoteViewTo vote(@RequestParam int restaurantId) {
         int userId = SecurityUtil.authorizedUser();
         log.debug("rest vote restaurantId={} userId={}", restaurantId,userId);
 
