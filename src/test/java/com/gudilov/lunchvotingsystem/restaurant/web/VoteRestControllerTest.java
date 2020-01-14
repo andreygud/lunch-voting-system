@@ -92,7 +92,7 @@ class VoteRestControllerTest extends AbstractControllerTest {
 
     @Test
     void votingResult_withDate() throws Exception {
-        perform(doGet("result?date" + LocalDate.now().toString()))
+        perform(doGet("result?date=" + LocalDate.now().toString()))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(content().json(VOTING_RESULTS_JSON));
@@ -100,7 +100,7 @@ class VoteRestControllerTest extends AbstractControllerTest {
 
     @Test
     void votingHistory() throws Exception {
-        perform(doGet("history?date" + LocalDate.now().toString()))
+        perform(doGet("history?date=" + LocalDate.now().toString()))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(content().json(VOTING_HISTORY_JSON));

@@ -28,7 +28,7 @@ class MenuItemRestControllerTest extends AbstractControllerTest {
 
     @Test
     void history() throws Exception {
-        perform(doGet("history?date" + LocalDate.now().toString()))
+        perform(doGet("history?date=" + LocalDate.now().toString()))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(content().json(MenuItemTestData.HISTORY_JSON));
