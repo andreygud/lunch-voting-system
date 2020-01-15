@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import static com.gudilov.lunchvotingsystem.restaurant.MenuItemTestData.*;
 import static com.gudilov.lunchvotingsystem.restaurant.RestaurantTestData.*;
+import static com.gudilov.lunchvotingsystem.user.UserTestData.ADMIN;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -30,7 +31,7 @@ class RestaurantAdminRestControllerTest extends AbstractControllerTest {
 
     @Test
     void delete() throws Exception {
-        perform(doDelete(RESTAURANT1_ID))
+        perform(doDelete(RESTAURANT1_ID).basicAuth(ADMIN))
                 .andDo(print())
                 .andExpect(status().isNoContent());
         assertThrows(NotFoundException.class, () -> restaurantService.get(RESTAURANT1_ID));
@@ -43,7 +44,7 @@ class RestaurantAdminRestControllerTest extends AbstractControllerTest {
 
         RestaurantTo updatedToExpected = new RestaurantTo(updated);
 
-        perform(doPut(RESTAURANT1_ID).jsonBody(updated))
+        perform(doPut(RESTAURANT1_ID).jsonBody(updated).basicAuth(ADMIN))
                 .andDo(print())
                 .andExpect(status().isNoContent());
         RestaurantTo updatedActual = restaurantService.get(RESTAURANT1_ID);
@@ -53,7 +54,7 @@ class RestaurantAdminRestControllerTest extends AbstractControllerTest {
 
     @Test
     void create() throws Exception {
-        perform(doPost().jsonBody(RESTAURANT_CREATE_TO))
+        perform(doPost().jsonBody(RESTAURANT_CREATE_TO).basicAuth(ADMIN))
                 .andDo(print())
                 .andExpect(status().isCreated());
 
@@ -64,7 +65,7 @@ class RestaurantAdminRestControllerTest extends AbstractControllerTest {
 
     @Test
     void update_bindValidationError() throws Exception {
-        perform(doPut(RESTAURANT1_ID).jsonBody(RESTAURANT_WRONG_ALL_INPUT_CREATE_TO))
+        perform(doPut(RESTAURANT1_ID).jsonBody(RESTAURANT_WRONG_ALL_INPUT_CREATE_TO).basicAuth(ADMIN))
                 .andDo(print())
                 .andExpect(status().isUnprocessableEntity())
                 .andExpect(content().json(WRONG_INPUT_JSON));
@@ -72,7 +73,7 @@ class RestaurantAdminRestControllerTest extends AbstractControllerTest {
 
     @Test
     void create_bindValidationError() throws Exception {
-        perform(doPost().jsonBody(RESTAURANT_WRONG_ALL_INPUT_CREATE_TO))
+        perform(doPost().jsonBody(RESTAURANT_WRONG_ALL_INPUT_CREATE_TO).basicAuth(ADMIN))
                 .andDo(print())
                 .andExpect(status().isUnprocessableEntity())
                 .andExpect(content().json(WRONG_INPUT_JSON));
@@ -80,7 +81,7 @@ class RestaurantAdminRestControllerTest extends AbstractControllerTest {
 
     @Test
     void createMenuItem() throws Exception {
-        perform(doPost(RESTAURANT1_ID + "/menu").jsonBody(CACTUS_ITEM_NEW_TO))
+        perform(doPost(RESTAURANT1_ID + "/menu").jsonBody(CACTUS_ITEM_NEW_TO).basicAuth(ADMIN))
                 .andDo(print())
                 .andExpect(status().isCreated())
                 .andExpect(ITEM_TO_TEST_MATCHERS.contentJson(CACTUS_ITEM_NEW_VIEW_TO));
@@ -89,7 +90,7 @@ class RestaurantAdminRestControllerTest extends AbstractControllerTest {
 
     @Test
     void deleteMenu() throws Exception {
-        perform(doDelete(RESTAURANT1_ID + "/menu"))
+        perform(doDelete(RESTAURANT1_ID + "/menu").basicAuth(ADMIN))
                 .andDo(print())
                 .andExpect(status().isNoContent());
 

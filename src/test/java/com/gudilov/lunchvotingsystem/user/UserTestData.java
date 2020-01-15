@@ -13,10 +13,10 @@ import java.util.Set;
 
 public class UserTestData {
     public static final int USER_ID = 100000;
-    public static final User USER = new User(USER_ID,"User","user@yandex.ru","{noop}password",true, LocalDateTime.now(),Set.of(Role.ROLE_USER));
+    public static final User USER = new User(USER_ID,"User","user@yandex.ru","password",true, LocalDateTime.now(),Set.of(Role.ROLE_USER));
     public static final UserViewTo USER_VIEW_TO = UserMapper.INSTANCE.transformEntityIntoViewTo(USER);
     public static final int ADMIN_ID = 100001;
-    public static final User ADMIN = new User(ADMIN_ID, "Admin", "admin@gmail.com", "{noop}admin", true, LocalDateTime.now(), Set.of(Role.ROLE_ADMIN, Role.ROLE_USER));
+    public static final User ADMIN = new User(ADMIN_ID, "Admin", "admin@gmail.com", "admin", true, LocalDateTime.now(), Set.of(Role.ROLE_ADMIN, Role.ROLE_USER));
     public static final UserViewTo ADMIN_VIEW_TO = UserMapper.INSTANCE.transformEntityIntoViewTo(ADMIN);
 
     public static final int USER1_ID = 100015;

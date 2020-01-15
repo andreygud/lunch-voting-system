@@ -1,6 +1,7 @@
 package com.gudilov.lunchvotingsystem.user.to;
 
 import com.gudilov.lunchvotingsystem.common.model.HasEmail;
+import com.gudilov.lunchvotingsystem.common.model.HasPassword;
 import com.gudilov.lunchvotingsystem.common.to.BaseTo;
 import com.gudilov.lunchvotingsystem.user.model.Role;
 
@@ -9,7 +10,7 @@ import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.util.Set;
 
-public class UserUpdateTo extends BaseTo implements HasEmail, Serializable {
+public class UserUpdateTo extends BaseTo implements HasEmail, Serializable, HasPassword {
     private static final long serialVersionUID = 1L;
 
     @Size(min = 2, max = 100)

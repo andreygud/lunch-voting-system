@@ -6,6 +6,7 @@ import com.gudilov.lunchvotingsystem.user.web.UserAdminRestController;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import static com.gudilov.lunchvotingsystem.user.UserTestData.ADMIN;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -22,7 +23,7 @@ class RestErrorHandlingTest extends AbstractControllerTest {
 
     @Test
     void errorHandling_illegalRequestDataError() throws Exception {
-        perform(doPost().jsonBody("gibberish string"))
+        perform(doPost().jsonBody("gibberish string").basicAuth(ADMIN))
                 .andDo(print())
                 .andExpect(status().isUnprocessableEntity())
                 .andExpect(content().json("{\"errorMessage\":\"HttpMessageNotReadableException\"}"));
@@ -30,7 +31,7 @@ class RestErrorHandlingTest extends AbstractControllerTest {
 
     @Test
     void errorHandling_notFoundError() throws Exception {
-        perform(doGet(100))
+        perform(doGet(100).basicAuth(ADMIN))
                 .andDo(print())
                 .andExpect(status().isNotFound())
                 .andExpect(content().json("{\"errorMessage\":\"NotFoundException\",\"details\":[\"id=100\"]}"));

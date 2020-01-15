@@ -1,6 +1,7 @@
 package com.gudilov.lunchvotingsystem.user.service;
 
 import com.gudilov.lunchvotingsystem.user.model.Role;
+import com.gudilov.lunchvotingsystem.user.to.UserCreateTo;
 import com.gudilov.lunchvotingsystem.user.to.UserUpdateTo;
 import com.gudilov.lunchvotingsystem.user.to.UserViewTo;
 import org.junit.jupiter.api.Test;
@@ -34,7 +35,7 @@ class UserServiceTest {
     void create() {
         List<UserViewTo> usersBefore = userService.getAll();
 
-        UserViewTo createdUser = userService.create(USER_1_CTO);
+        UserViewTo createdUser = userService.create(new UserCreateTo(USER_1_CTO));
         List<UserViewTo> usersAfter = userService.getAll();
 
         USER_VIEW_TO_TEST_MATCHERS.assertMatch(createdUser, USER1_VIEW_TO);
@@ -45,7 +46,7 @@ class UserServiceTest {
 
     @Test
     void create_dublicateEmail() {
-        assertThrows(DataIntegrityViolationException.class, () -> userService.create(USER_DUPLICATE_CTO));
+        assertThrows(DataIntegrityViolationException.class, () -> userService.create(new UserCreateTo(USER_DUPLICATE_CTO)));
     }
 
     @Test

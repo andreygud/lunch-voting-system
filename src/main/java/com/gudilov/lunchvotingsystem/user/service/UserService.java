@@ -1,5 +1,6 @@
 package com.gudilov.lunchvotingsystem.user.service;
 
+import com.gudilov.lunchvotingsystem.common.model.HasPassword;
 import com.gudilov.lunchvotingsystem.user.model.User;
 import com.gudilov.lunchvotingsystem.user.repository.UserRepository;
 import com.gudilov.lunchvotingsystem.user.service.mapper.UserMapper;
@@ -8,8 +9,10 @@ import com.gudilov.lunchvotingsystem.user.to.UserUpdateTo;
 import com.gudilov.lunchvotingsystem.user.to.UserViewTo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
 
 import java.util.List;
 
@@ -23,16 +26,19 @@ public class UserService {
 
     private UserMapper userMapper;
     private UserRepository userRepository;
+    private PasswordEncoder passwordEncoder;
 
-    public UserService(UserMapper userMapper, UserRepository userRepository) {
+    public UserService(UserMapper userMapper, UserRepository userRepository, PasswordEncoder passwordEncoder) {
         this.userMapper = userMapper;
         this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     public UserViewTo create(UserCreateTo createTo) {
         log.debug("create {}", createTo);
         notNull(createTo, "user must not be null");
         checkNew(createTo);
+        encodePassword(createTo);
         User user = userRepository.save(userMapper.transformToIntoEntity(createTo));
         return userMapper.transformEntityIntoViewTo(user);
     }
@@ -41,7 +47,7 @@ public class UserService {
     public void update(UserUpdateTo updateTo) {
         log.debug("update {}", updateTo);
         notNull(updateTo, "user must not be null");
-
+        encodePassword(updateTo);
         User user = checkNotFoundWithId(userRepository.get(updateTo.getId()), updateTo.getId());
         userMapper.updateExistingEntity(updateTo,user);
     }
@@ -64,4 +70,9 @@ public class UserService {
         return userMapper.transformEntitiesIntoViewTos(users);
     }
 
+
+    private void encodePassword(HasPassword to) {
+        String rawPassword = to.getPassword();
+        to.setPassword(StringUtils.hasText(rawPassword) ? passwordEncoder.encode(rawPassword) : rawPassword);
+    }
 }

@@ -76,7 +76,6 @@ class VoteServiceTest {
         voteService.vote(USER_ID, RESTAURANT1_ID);
         assertEquals(4, voteRepository.getAll().size());
     }
-    //todo check wrong restaurant and user
     @Test
     void getLast() {
         shiftTime(DATE_TIME_BEFORE1100);

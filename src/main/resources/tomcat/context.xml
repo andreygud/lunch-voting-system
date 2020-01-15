@@ -30,13 +30,16 @@
     <!--
     <Valve className="org.apache.catalina.valves.CometConnectionManagerValve" />
     -->
-<!--
+<!-- todo change before the delivery
 url="jdbc:h2:file:C:/tmp/h2;DB_CLOSE_DELAY=-1;MODE=Oracle;TRACE_LEVEL_SYSTEM_OUT=2"
+
+              url="jdbc:h2:mem:lvs"
+
 -->
     <Resource name="jdbc/h2"
               auth="Container"
               type="javax.sql.DataSource"
-              url="jdbc:h2:mem:lvs"
+              url="jdbc:h2:file:C:/tmp/h2;DB_CLOSE_DELAY=-1"
               username="admin"
               password="password"
               driverClassName="org.h2.Driver"

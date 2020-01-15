@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import static com.gudilov.lunchvotingsystem.restaurant.MenuItemTestData.*;
+import static com.gudilov.lunchvotingsystem.user.UserTestData.ADMIN;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -24,7 +25,7 @@ class MenuItemAdminRestControllerTest extends AbstractControllerTest {
     @Test
     void delete() throws Exception {
         int before = menuItemService.getAll(RestaurantTestData.RESTAURANT1_ID).size();
-        perform(doDelete(CACTUS_ITEM1_BURGER_ID))
+        perform(doDelete(CACTUS_ITEM1_BURGER_ID).basicAuth(ADMIN))
                 .andDo(print())
                 .andExpect(status().isNoContent());
         int after = menuItemService.getAll(RestaurantTestData.RESTAURANT1_ID).size();
@@ -34,7 +35,7 @@ class MenuItemAdminRestControllerTest extends AbstractControllerTest {
 
     @Test
     void update() throws Exception {
-        perform(doPut(CACTUS_ITEM1_BURGER_ID).jsonBody(CACTUS_ITEM1_BURGER_UPDATE_TO))
+        perform(doPut(CACTUS_ITEM1_BURGER_ID).jsonBody(CACTUS_ITEM1_BURGER_UPDATE_TO).basicAuth(ADMIN))
                 .andDo(print())
                 .andExpect(status().isNoContent());
         MenuItemViewTo item = menuItemService.get(CACTUS_ITEM1_BURGER_ID);

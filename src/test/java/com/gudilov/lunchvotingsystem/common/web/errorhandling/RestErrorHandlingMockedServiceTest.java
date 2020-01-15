@@ -1,13 +1,14 @@
 package com.gudilov.lunchvotingsystem.common.web.errorhandling;
 
 import com.gudilov.lunchvotingsystem.common.web.AbstractControllerTest;
+import com.gudilov.lunchvotingsystem.user.UserTestData;
 import com.gudilov.lunchvotingsystem.user.service.UserService;
 import com.gudilov.lunchvotingsystem.user.web.UserAdminRestController;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.junit.jupiter.web.SpringJUnitWebConfig;
 
-import static com.gudilov.lunchvotingsystem.user.UserTestData.USER_ID;
+import static com.gudilov.lunchvotingsystem.user.UserTestData.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -25,7 +26,7 @@ class RestErrorHandlingMockedServiceTest extends AbstractControllerTest {
 
     @Test
     void handleError() throws Exception {
-        perform(doGet(USER_ID))
+        perform(doGet(USER_ID).basicAuth(UserTestData.ADMIN))
                 .andDo(print())
                 .andExpect(status().isInternalServerError())
                 .andExpect(content().json("{\"errorMessage\":\"RuntimeException\",\"details\":[\"Cannot process the request\"]}"));

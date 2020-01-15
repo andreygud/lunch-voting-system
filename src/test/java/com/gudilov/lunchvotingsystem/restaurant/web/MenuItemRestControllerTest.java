@@ -2,6 +2,7 @@ package com.gudilov.lunchvotingsystem.restaurant.web;
 
 import com.gudilov.lunchvotingsystem.common.web.AbstractControllerTest;
 import com.gudilov.lunchvotingsystem.restaurant.MenuItemTestData;
+import com.gudilov.lunchvotingsystem.user.UserTestData;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
@@ -20,7 +21,7 @@ class MenuItemRestControllerTest extends AbstractControllerTest {
 
     @Test
     void get() throws Exception {
-        perform(doGet(MenuItemTestData.CACTUS_ITEM1_BURGER_ID))
+        perform(doGet(MenuItemTestData.CACTUS_ITEM1_BURGER_ID).basicAuth(UserTestData.USER))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(ITEM_TO_TEST_MATCHERS.contentJson(CACTUS_ITEM1_BURGER_VIEW_TO));
@@ -28,7 +29,7 @@ class MenuItemRestControllerTest extends AbstractControllerTest {
 
     @Test
     void history() throws Exception {
-        perform(doGet("history?date=" + LocalDate.now().toString()))
+        perform(doGet("history?date=" + LocalDate.now().toString()).basicAuth(UserTestData.USER))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(content().json(MenuItemTestData.HISTORY_JSON));
