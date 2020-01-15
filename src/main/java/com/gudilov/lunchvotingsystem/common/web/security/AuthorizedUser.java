@@ -1,4 +1,4 @@
-package com.gudilov.lunchvotingsystem.user.security;
+package com.gudilov.lunchvotingsystem.common.web.security;
 
 import com.gudilov.lunchvotingsystem.user.model.User;
 

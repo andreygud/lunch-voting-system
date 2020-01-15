@@ -1,8 +1,7 @@
-package com.gudilov.lunchvotingsystem.user.service;
+package com.gudilov.lunchvotingsystem.common.web.security;
 
 import com.gudilov.lunchvotingsystem.user.model.User;
 import com.gudilov.lunchvotingsystem.user.repository.UserRepository;
-import com.gudilov.lunchvotingsystem.user.security.AuthorizedUser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.core.userdetails.UserDetailsService;

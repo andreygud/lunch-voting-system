@@ -1,6 +1,5 @@
 package com.gudilov.lunchvotingsystem.user.service;
 
-import com.gudilov.lunchvotingsystem.common.model.HasPassword;
 import com.gudilov.lunchvotingsystem.user.model.User;
 import com.gudilov.lunchvotingsystem.user.repository.UserRepository;
 import com.gudilov.lunchvotingsystem.user.service.mapper.UserMapper;
@@ -12,12 +11,12 @@ import org.slf4j.LoggerFactory;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.StringUtils;
 
 import java.util.List;
 
 import static com.gudilov.lunchvotingsystem.common.utils.ValidationUtil.checkNew;
 import static com.gudilov.lunchvotingsystem.common.utils.ValidationUtil.checkNotFoundWithId;
+import static com.gudilov.lunchvotingsystem.common.web.security.SecurityUtil.encodePassword;
 import static org.springframework.util.Assert.notNull;
 
 @Service
@@ -38,7 +37,7 @@ public class UserService {
         log.debug("create {}", createTo);
         notNull(createTo, "user must not be null");
         checkNew(createTo);
-        encodePassword(createTo);
+        encodePassword(passwordEncoder, createTo);
         User user = userRepository.save(userMapper.transformToIntoEntity(createTo));
         return userMapper.transformEntityIntoViewTo(user);
     }
@@ -47,7 +46,7 @@ public class UserService {
     public void update(UserUpdateTo updateTo) {
         log.debug("update {}", updateTo);
         notNull(updateTo, "user must not be null");
-        encodePassword(updateTo);
+        encodePassword(passwordEncoder, updateTo);
         User user = checkNotFoundWithId(userRepository.get(updateTo.getId()), updateTo.getId());
         userMapper.updateExistingEntity(updateTo,user);
     }
@@ -71,8 +70,4 @@ public class UserService {
     }
 
 
-    private void encodePassword(HasPassword to) {
-        String rawPassword = to.getPassword();
-        to.setPassword(StringUtils.hasText(rawPassword) ? passwordEncoder.encode(rawPassword) : rawPassword);
-    }
 }

@@ -1,6 +1,6 @@
 package com.gudilov.lunchvotingsystem.restaurant.web;
 
-import com.gudilov.lunchvotingsystem.common.utils.SecurityUtil;
+import com.gudilov.lunchvotingsystem.common.web.security.SecurityUtil;
 import com.gudilov.lunchvotingsystem.restaurant.reports.ReportingRepository;
 import com.gudilov.lunchvotingsystem.restaurant.service.VoteService;
 import com.gudilov.lunchvotingsystem.restaurant.to.VoteViewTo;
