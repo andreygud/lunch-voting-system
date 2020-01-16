@@ -44,12 +44,12 @@ public class ReportingRepository {
                 userId, LocalDateTime.of(startFromDay, LocalTime.MIN));
     }
 
-    public List<MenuItemHistoryTo> getMenuHistory(LocalDate startFromDay) {
+    public List<MenuItemHistoryTo> getMenuHistory(LocalDate startFromDay, Integer restaurantId) {
         return jdbcTemplate.query("select mi.MENU_DATE as menuDate, r.id as restaurantId, r.NAME as restaurantName, " +
                         "mi.NAME as dishName, mi.PRICE as price  " +
-                        "from MENU_ITEM mi join RESTAURANT R on mi.RESTAURANT_ID = R.ID where mi.MENU_DATE > ?",
+                        "from MENU_ITEM mi join RESTAURANT R on mi.RESTAURANT_ID = R.ID where mi.MENU_DATE >= ? and r.id = NVL(?,r.id) order by menuDate,restaurantId,dishName",
                 MENU_HISTORY_MAPPER,
-                LocalDateTime.of(startFromDay, LocalTime.MIN));
+                LocalDateTime.of(startFromDay, LocalTime.MIN),restaurantId);
     }
 }
 

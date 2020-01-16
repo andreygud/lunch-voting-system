@@ -1,8 +1,12 @@
 package com.gudilov.lunchvotingsystem.restaurant.web;
 
 import com.gudilov.lunchvotingsystem.common.web.AbstractControllerTest;
+import com.gudilov.lunchvotingsystem.restaurant.MenuItemTestData;
+import com.gudilov.lunchvotingsystem.user.UserTestData;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.MediaType;
+
+import java.time.LocalDate;
 
 import static com.gudilov.lunchvotingsystem.restaurant.MenuItemTestData.*;
 import static com.gudilov.lunchvotingsystem.restaurant.RestaurantTestData.*;
@@ -41,5 +45,21 @@ class RestaurantRestControllerTest extends AbstractControllerTest {
                 .andDo((print()))
                 .andExpect(status().isOk())
                 .andExpect(ITEM_TO_TEST_MATCHERS.contentJson(CACTUS_ITEM1_BURGER_VIEW_TO, CACTUS_ITEM2_BURGER_VIEW_TO, CACTUS_ITEM3_BURGER_VIEW_TO));
+    }
+
+    @Test
+    void history() throws Exception {
+        perform(doGet("menu_history?start=" + LocalDate.now().toString()).basicAuth(UserTestData.USER))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(content().json(MenuItemTestData.HISTORY_JSON));
+    }
+
+    @Test
+    void history_by_restaurant() throws Exception {
+        perform(doGet("menu_history?start=" + LocalDate.now().toString()+"&restaurantId="+RESTAURANT1_ID).basicAuth(UserTestData.USER))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(content().json(MenuItemTestData.HISTORY_JSON_SINGLEREST));
     }
 }
