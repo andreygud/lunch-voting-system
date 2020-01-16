@@ -1,4 +1,4 @@
-#Lunch voting system
+# Lunch voting system
 Is is a sofisticated voting system for deciding where to have lunch.
 
  * 2 types of users: admin and regular users. It is also assumed that it is a *closed community* of 'lunch-goers'. So a user 
@@ -13,7 +13,7 @@ Is is a sofisticated voting system for deciding where to have lunch.
 
 Each restaurant provides new menu each day.
 
-#Build and start
+# Build and start
 
 To build,test and run - type the following command: 
 
@@ -24,7 +24,7 @@ To build,test and run - type the following command:
 time you shut down the application*
 - *it is a prototype so the system is pre-populated with some data*
 
-#Authentication
+# Authentication
 
 To get the access to the functions you need to user Basic Authentication in your requests.
 There are two levels of access: Admin and User  
@@ -32,7 +32,7 @@ There are two levels of access: Admin and User
 Initial Admin User credentials: *admin@gmail.com/admin*
 Initial User credentials: *user@yandex.ru/admin*
 
-#REST API
+# REST API
 
 ## User Management Operations
 
@@ -188,7 +188,7 @@ Access level: User
 curl -i --basic -u user@yandex.ru:password localhost:8080/rest/restaurant/100003
 ```
 
-###Add a new restaurant 
+### Add a new restaurant 
 ```
 POST /rest/admin/restaurant
 ```
@@ -203,7 +203,7 @@ curl --basic -u admin@gmail.com:admin -i -H 'Content-Type:application/json' \
 localhost:8080/rest/admin/restaurant
 ```
 
-###Delete a restaurant 
+### Delete a restaurant 
 ```
 DELETE /rest/admin/restaurant/{id}
 ```
@@ -215,7 +215,7 @@ Access level: Admin
 curl --basic -u admin@gmail.com:admin -i -X DELETE localhost:8080/rest/admin/restaurant/100015
 ```
 
-###Edit restaurant parameters 
+### Edit restaurant parameters 
 ```
 PUT /rest/admin/restaurant/{id}
 ```
@@ -230,7 +230,7 @@ curl --basic -u admin@gmail.com:admin -i -H 'Content-Type:application/json' -X P
 '{"id":100002,"name":"newname"}' localhost:8080/rest/admin/restaurant/100002
 ```
 
-###Get restaurant menu (current date)
+### Get restaurant menu (current date)
 ```
 GET /rest/restaurant/{id}/menu
 ```
@@ -243,7 +243,7 @@ Access level: User
 curl -i --basic -u user@yandex.ru:password localhost:8080/rest/restaurant/100003/menu
 ```
 
-###Get history of menu changes
+### Get history of menu changes
 ```
 GET /rest/restaurant/menu_history?start={iso_date}&restaurantId={id}
 ```
@@ -259,7 +259,7 @@ Access level: User
 curl -i --basic -u user@yandex.ru:password localhost:8080/rest/restaurant/menu_history?start=2020-01-15&restaurantId=100002
 ```
 
-###Add an item to the menu
+### Add an item to the menu
 ```
 POST /rest/admin/restaurant/{id}/menu
 ```
@@ -273,7 +273,7 @@ curl --basic -u admin@gmail.com:admin -i -H 'Content-Type:application/json' \
 -d '{"name":"Something new","price":17.25,"menuDate":"2020-01-15"}' \
 localhost:8080/rest/admin/restaurant/100002/menu
 ```
-###Delete menu (all items) (current date)
+### Delete menu (all items) (current date)
 ```
 DELETE /rest/admin/restaurant/{id}/menu
 ```
@@ -286,7 +286,7 @@ Access level: Admin
 curl --basic -u admin@gmail.com:admin -i -X DELETE localhost:8080/rest/admin/restaurant/100015/menu
 ```
 
-###Get menu item description
+### Get menu item description
 ```
 GET /rest/menuItems/{id}
 ```
@@ -297,7 +297,7 @@ Access level: User
 ```
 curl -i --basic -u user@yandex.ru:password localhost:8080/rest/menuItems/100010
 ```
-###Delete a menuitem 
+### Delete a menuitem 
 ```
 DELETE /rest/admin/menuItems/{id}
 ```
@@ -309,7 +309,7 @@ Access level: Admin
 curl --basic -u admin@gmail.com:admin -i -X DELETE localhost:8080/rest/admin/menuItems/100011
 ```
 
-###Edit menu item parameters 
+### Edit menu item parameters 
 ```
 PUT /rest/admin/menuItems/{id}
 ```
@@ -333,7 +333,7 @@ Get your last vote | User | GET | /rest/vote/last
 Get voting results | User | GET | /rest/vote/result?date={iso_date}
 Get your particular vote info | User | GET | /rest/vote/{id}
 
-###Vote for the restaurant
+### Vote for the restaurant
 ```
 GET /rest/vote?restaurantId={id}
 ```
@@ -348,7 +348,7 @@ Access level: User
 curl --basic -u user@yandex.ru:password -X POST localhost:8080/rest/vote?restaurantId=100004
 ```
 
-###Get voting history
+### Get voting history
 ```
 GET /rest/vote/history?start={iso_date}
 ```
@@ -364,7 +364,7 @@ Access level: User
 curl -i --basic -u user@yandex.ru:password localhost:8080/rest/vote/history?start=2020-01-15
 ```
 
-###Get your last vote
+### Get your last vote
 ```
 GET /rest/vote/last
 ```
@@ -377,7 +377,7 @@ Access level: User
 curl -i --basic -u user@yandex.ru:password localhost:8080/rest/vote/last
 ```
 
-###Get voting results
+### Get voting results
 ```
 GET /rest/vote/result?date={iso_date}
 ```
@@ -390,7 +390,7 @@ Access level: User
 ```
 curl -i --basic -u user@yandex.ru:password localhost:8080/rest/vote/result?date=2020-01-15
 ```
-###Get your particular vote info
+### Get your particular vote info
 ```
 GET /rest/vote/{id}
 ```
