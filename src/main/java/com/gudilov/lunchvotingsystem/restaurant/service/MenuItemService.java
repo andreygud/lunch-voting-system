@@ -49,9 +49,9 @@ public class MenuItemService {
         checkNotFoundWithId(menuItemRepository.delete(id), id);
     }
 
-    public void deleteAll(int restaurantId) {
+    public void deleteAllForToday(int restaurantId) {
         log.debug("delete All by restaurantId={}", restaurantId);
-        checkNotFoundWithId(menuItemRepository.deleteAll(restaurantId), restaurantId);
+        checkNotFoundWithId(menuItemRepository.deleteAllForToday(restaurantId), restaurantId);
     }
 
     public MenuItemViewTo get(int id) {
@@ -60,9 +60,9 @@ public class MenuItemService {
         return menuItemMapper.transformEntityIntoViewTo(item);
     }
 
-    public List<MenuItemViewTo> getAll(int restaurantId) {
+    public List<MenuItemViewTo> getAllForToday(int restaurantId) {
         log.debug("getAll");
-        List<MenuItem> items = menuItemRepository.getAll(restaurantId);
+        List<MenuItem> items = menuItemRepository.getAllForToday(restaurantId);
         return menuItemMapper.transformEntitiesIntoViewTos(items);
     }
 }

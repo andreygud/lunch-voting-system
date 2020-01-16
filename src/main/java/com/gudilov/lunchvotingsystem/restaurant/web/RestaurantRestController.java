@@ -47,9 +47,9 @@ public class RestaurantRestController {
     }
 
     @GetMapping("/{id}/menu")
-    public List<MenuItemViewTo> getMenu(@PathVariable int id) {
+    public List<MenuItemViewTo> getTodayMenu(@PathVariable int id) {
         log.debug("rest get menu  restaurant id={}", id);
-        return menuItemService.getAll(id);
+        return menuItemService.getAllForToday(id);
     }
 
     @GetMapping("/menu_history")

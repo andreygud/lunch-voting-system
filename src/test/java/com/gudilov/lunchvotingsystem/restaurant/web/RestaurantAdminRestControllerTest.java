@@ -94,7 +94,7 @@ class RestaurantAdminRestControllerTest extends AbstractControllerTest {
                 .andDo(print())
                 .andExpect(status().isNoContent());
 
-        int after = itemService.getAll(RESTAURANT1_ID).size();
+        int after = itemService.getAllForToday(RESTAURANT1_ID).size();
 
         assertEquals(0, after);
     }

@@ -70,9 +70,9 @@ public class RestaurantAdminRestController {
 
     @DeleteMapping("/{id}/menu")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteMenu(@PathVariable int id) {
+    public void deleteTodayMenu(@PathVariable int id) {
         log.debug("rest restaurant delete Menu restId={}", id);
-        menuItemService.deleteAll(id);
+        menuItemService.deleteAllForToday(id);
     }
 }
 

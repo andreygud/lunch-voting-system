@@ -12,7 +12,7 @@ import java.util.List;
 public interface CrudMenuItemRepository extends JpaRepository<MenuItem, Integer> {
 
     @Query("SELECT mi FROM MenuItem mi WHERE mi.restaurant.id=:restaurantId and mi.menuDate = current_date()")
-    List<MenuItem> findAllByRestaurantIdOrderByName(@Param("restaurantId") int restaurantId);
+    List<MenuItem> findAllByRestaurantIdForToday(@Param("restaurantId") int restaurantId);
 
     @Transactional
     @Modifying
@@ -22,5 +22,5 @@ public interface CrudMenuItemRepository extends JpaRepository<MenuItem, Integer>
     @Transactional
     @Modifying
     @Query("DELETE FROM MenuItem mi WHERE mi.restaurant.id=:restaurantId and mi.menuDate = current_date()")
-    int deleteAllByRestaurantId(@Param("restaurantId") int restaurantId);
+    int deleteAllByRestaurantIdForToday(@Param("restaurantId") int restaurantId);
 }

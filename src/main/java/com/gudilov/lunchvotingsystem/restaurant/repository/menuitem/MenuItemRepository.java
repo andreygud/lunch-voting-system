@@ -7,7 +7,7 @@ import java.util.List;
 public interface MenuItemRepository {
 
     // empty list if not found
-    List<MenuItem> getAll(int restaurantId);
+    List<MenuItem> getAllForToday(int restaurantId);
 
     // null if not found
     MenuItem get(int id);
@@ -17,5 +17,5 @@ public interface MenuItemRepository {
     // false if not found
     boolean delete(int id);
 
-    boolean deleteAll(int restaurant);
+    boolean deleteAllForToday(int restaurant);
 }

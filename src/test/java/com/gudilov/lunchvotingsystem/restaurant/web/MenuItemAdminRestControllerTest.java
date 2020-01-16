@@ -24,11 +24,11 @@ class MenuItemAdminRestControllerTest extends AbstractControllerTest {
 
     @Test
     void delete() throws Exception {
-        int before = menuItemService.getAll(RestaurantTestData.RESTAURANT1_ID).size();
+        int before = menuItemService.getAllForToday(RestaurantTestData.RESTAURANT1_ID).size();
         perform(doDelete(CACTUS_ITEM1_BURGER_ID).basicAuth(ADMIN))
                 .andDo(print())
                 .andExpect(status().isNoContent());
-        int after = menuItemService.getAll(RestaurantTestData.RESTAURANT1_ID).size();
+        int after = menuItemService.getAllForToday(RestaurantTestData.RESTAURANT1_ID).size();
 
         assertEquals(before - 1, after);
     }

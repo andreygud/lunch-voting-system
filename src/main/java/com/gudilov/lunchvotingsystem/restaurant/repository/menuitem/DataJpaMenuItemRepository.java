@@ -17,8 +17,8 @@ public class DataJpaMenuItemRepository implements MenuItemRepository {
     }
 
     @Override
-    public List<MenuItem> getAll(int restaurantId) {
-        return crudMenuItemRepository.findAllByRestaurantIdOrderByName(restaurantId);
+    public List<MenuItem> getAllForToday(int restaurantId) {
+        return crudMenuItemRepository.findAllByRestaurantIdForToday(restaurantId);
     }
 
     @Override
@@ -41,8 +41,8 @@ public class DataJpaMenuItemRepository implements MenuItemRepository {
     }
 
     @Override
-    public boolean deleteAll(int restaurantId) {
-        return crudMenuItemRepository.deleteAllByRestaurantId(restaurantId) != 0;
+    public boolean deleteAllForToday(int restaurantId) {
+        return crudMenuItemRepository.deleteAllByRestaurantIdForToday(restaurantId) != 0;
     }
 
 }
