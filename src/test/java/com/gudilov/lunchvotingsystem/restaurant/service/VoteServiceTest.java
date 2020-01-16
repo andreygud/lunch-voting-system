@@ -39,7 +39,7 @@ class VoteServiceTest {
         shiftTime(DATE_TIME_BEFORE1100);
 
         voteService.vote(ADMIN_ID, RESTAURANT1_ID);
-        assertEquals(2, voteRepository.getAll().size());
+        assertEquals(6, voteRepository.getAll().size());
     }
 
     @Test
@@ -47,7 +47,7 @@ class VoteServiceTest {
         shiftTime(DATE_TIME_AFTER1100);
 
         assertThrows(BusinessRuleViolationException.class, () -> voteService.vote(ADMIN_ID, RESTAURANT3_ID));
-        assertEquals(2, voteRepository.getAll().size());
+        assertEquals(6, voteRepository.getAll().size());
     }
 
     @Test
@@ -55,7 +55,7 @@ class VoteServiceTest {
         shiftTime(NEXTDAY_DATE_TIME_BEFORE1100);
 
         voteService.vote(ADMIN_ID, RESTAURANT1_ID);
-        assertEquals(3, voteRepository.getAll().size());
+        assertEquals(7, voteRepository.getAll().size());
     }
 
     @Test
@@ -74,7 +74,7 @@ class VoteServiceTest {
 
         voteService.vote(ADMIN_ID, RESTAURANT1_ID);
         voteService.vote(USER_ID, RESTAURANT1_ID);
-        assertEquals(4, voteRepository.getAll().size());
+        assertEquals(8, voteRepository.getAll().size());
     }
     @Test
     void getLast() {

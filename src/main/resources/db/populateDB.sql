@@ -32,3 +32,18 @@ VALUES ('100002', 'Cactus Burget', 16),
        ('100003', 'Ribs', 25),
        ('100003', 'Yellow tail sushi', 12),
        ('100004', 'California roll', 14);
+
+INSERT INTO menu_item (MENU_DATE,restaurant_id, name, price)
+VALUES ( DATEADD(Day ,-1, current_date), '100002', 'Mangus Cactus Burget', 16),
+       ( DATEADD(Day ,-1, current_date),'100002', 'Blue Quasadilias', 10.5),
+       ( DATEADD(Day ,-1, current_date),'100002', 'Red Rice Bowl', 10.5),
+       ( DATEADD(Day ,-1, current_date),'100003', 'Super Four mushroom steak', 33),
+       ( DATEADD(Day ,-1, current_date),'100003', 'Joe Mojo Burger', 17),
+       ( DATEADD(Day ,-1, current_date),'100003', 'Bla Ribs', 25),
+       ( DATEADD(Day ,-1, current_date),'100003', 'Yellow tail bbbushi', 12);
+
+INSERT INTO vote (user_id, restaurant_id, vote_time)
+VALUES ('100000', 100002, DATEADD(Day ,-1, current_date) || ' 08:49:52.68'),
+       ('100001', 100003, DATEADD(Day ,-1, current_date) || ' 10:44:30.45'),
+       ('100000', 100002, DATEADD(Day ,-2, current_date) || ' 07:47:52.63'),
+       ('100001', 100003, DATEADD(Day ,-2, current_date) || ' 10:38:30.30');
