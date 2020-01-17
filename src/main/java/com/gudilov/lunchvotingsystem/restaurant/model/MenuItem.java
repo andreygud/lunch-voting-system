@@ -2,6 +2,7 @@ package com.gudilov.lunchvotingsystem.restaurant.model;
 
 
 import com.gudilov.lunchvotingsystem.common.model.AbstractNamedEntity;
+import lombok.*;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
@@ -11,12 +12,16 @@ import java.time.LocalDate;
 
 @Entity
 @Table(name = "menu_item")
+@Getter @Setter
+@NoArgsConstructor
+@ToString(callSuper = true)
 public class MenuItem extends AbstractNamedEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "restaurant_id", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @NotNull
+    @ToString.Exclude
     private Restaurant restaurant;
 
     @Column(name = "price", nullable = false, precision = 10, scale = 2)
@@ -25,37 +30,4 @@ public class MenuItem extends AbstractNamedEntity {
     @Column(name = "menu_date")
     private LocalDate menuDate;
 
-    public Restaurant getRestaurant() {
-        return restaurant;
-    }
-
-    public void setRestaurant(Restaurant restaurant) {
-        this.restaurant = restaurant;
-    }
-
-    public double getPrice() {
-        return price;
-    }
-
-    public void setPrice(double price) {
-        this.price = price;
-    }
-
-    public LocalDate getMenuDate() {
-        return menuDate;
-    }
-
-    public void setMenuDate(LocalDate menuDate) {
-        this.menuDate = menuDate;
-    }
-
-    @Override
-    public String toString() {
-        return "MenuItem{" +
-                "price=" + price +
-                ", menuDate=" + menuDate +
-                ", name='" + name + '\'' +
-                ", id=" + id +
-                '}';
-    }
 }
