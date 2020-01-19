@@ -2,6 +2,7 @@ package com.gudilov.lunchvotingsystem.restaurant.service;
 
 import com.gudilov.lunchvotingsystem.restaurant.model.MenuItem;
 import com.gudilov.lunchvotingsystem.restaurant.repository.menuitem.MenuItemRepository;
+import com.gudilov.lunchvotingsystem.restaurant.repository.restaurant.RestaurantRepository;
 import com.gudilov.lunchvotingsystem.restaurant.service.mapper.MenuItemsMapper;
 import com.gudilov.lunchvotingsystem.restaurant.to.MenuItemTo;
 import com.gudilov.lunchvotingsystem.restaurant.to.MenuItemViewTo;
@@ -13,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 import static com.gudilov.lunchvotingsystem.common.utils.ValidationUtil.*;
+import static com.gudilov.lunchvotingsystem.common.utils.ValidationUtil.checkNotFoundWithId;
 import static org.springframework.util.Assert.notNull;
 
 @Service
@@ -21,10 +23,12 @@ public class MenuItemService {
 
     private MenuItemsMapper menuItemMapper;
     private MenuItemRepository menuItemRepository;
+    private RestaurantRepository restaurantRepository;
 
-    public MenuItemService(MenuItemsMapper menuItemMapper, MenuItemRepository menuItemRepository) {
+    public MenuItemService(MenuItemsMapper menuItemMapper, MenuItemRepository menuItemRepository, RestaurantRepository restaurantRepository) {
         this.menuItemMapper = menuItemMapper;
         this.menuItemRepository = menuItemRepository;
+        this.restaurantRepository = restaurantRepository;
     }
 
     public MenuItemViewTo create(MenuItemTo menuItemTo, int restaurantId) {
@@ -62,6 +66,7 @@ public class MenuItemService {
 
     public List<MenuItemViewTo> getAllForToday(int restaurantId) {
         log.debug("getAll");
+        checkNotFoundWithId(restaurantRepository.get(restaurantId),restaurantId);
         List<MenuItem> items = menuItemRepository.getAllForToday(restaurantId);
         return menuItemMapper.transformEntitiesIntoViewTos(items);
     }
