@@ -101,7 +101,7 @@ class VoteRestControllerTest extends AbstractControllerTest {
 
     @Test
     void votingHistory() throws Exception {
-        perform(doGet("history?date=" + LocalDate.now().toString()).basicAuth(USER))
+        perform(doGet("history?start=" + LocalDate.now().toString()).basicAuth(USER))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(content().json(VOTING_HISTORY_JSON));

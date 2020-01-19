@@ -249,7 +249,7 @@ GET /rest/restaurant/menu_history?start={iso_date}&restaurantId={id}
 ```
 The call returns history of menu changes - menu items grouped by date and restaurant and also ordered alphabetically.
 It takes two optional parameters: 
-- start - the date since what you want to get the information, if null it returns for all dates. 
+- start - the date since what you want to get the information, if null it returns history for the last 14 dates. 
 - restaurantId - if you are interested in a specific restaurant, if null it returns for all restaurants.
  
 Access level: User
@@ -355,7 +355,7 @@ GET /rest/vote/history?start={iso_date}
 The call returns history of your votes. It restricts you with your history only and shows votes based on the authenticated user.
 The result is order by date/time.
 It takes one optional parameter: 
-- start - the date since what you want to get the history information, if null it returns the entire history. 
+- start - the date since what you want to get the history information, if null it returns history for last 14 days. 
  
 Access level: User
 

@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.*;
 import java.time.LocalDate;
 import java.util.List;
 
+import static com.gudilov.lunchvotingsystem.restaurant.web.RestaurantRestController.DEFAULT_HISTORY_DEPTH;
+
 @RestController
 @RequestMapping(VoteRestController.REST_URL)
 public class VoteRestController {
@@ -70,7 +72,7 @@ public class VoteRestController {
         log.debug("rest votinghistory start={}", start);
         int userId = SecurityUtil.authorizedUser();
         if (start == null) {
-            start = LocalDate.now();
+            start = LocalDate.now().minusDays(DEFAULT_HISTORY_DEPTH);
         }
         return reportingRepository.getVotingHistory(userId, start);
     }
