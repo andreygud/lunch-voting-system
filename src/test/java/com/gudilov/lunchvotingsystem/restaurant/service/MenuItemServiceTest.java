@@ -9,7 +9,6 @@ import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.jdbc.SqlConfig;
 import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 
-import java.time.LocalDate;
 import java.util.List;
 
 import static com.gudilov.lunchvotingsystem.restaurant.MenuItemTestData.*;
@@ -31,7 +30,7 @@ class MenuItemServiceTest {
 
     @Test
     void create() {
-        MenuItemTo item = new MenuItemTo(null, "my dish", 23L, LocalDate.now());
+        MenuItemTo item = new MenuItemTo(null, "my dish", 23);
         service.create(item, RESTAURANT1_ID);
         int actual = repository.getAllForToday(RESTAURANT1_ID).size();
         assertEquals(4, actual);

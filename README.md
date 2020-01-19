@@ -207,7 +207,7 @@ localhost:8080/rest/admin/restaurant
 ```
 DELETE /rest/admin/restaurant/{id}
 ```
-Does pretty much what it says - deletes by a restaurant by its id. 
+Does pretty much what it says - deletes a restaurant by its id. 
 Access level: Admin
 
 *Example:*
@@ -259,18 +259,18 @@ Access level: User
 curl -i --basic -u user@yandex.ru:password localhost:8080/rest/restaurant/menu_history?start=2020-01-15&restaurantId=100002
 ```
 
-### Add an item to the menu
+### Add an item to the menu (current date)
 ```
 POST /rest/admin/restaurant/{id}/menu
 ```
-The call creates a menu item for a restaurant with the specified id. The menu item description should be 
-provided in the body of the request in JSON format. 
+The call creates a menu item for a restaurant with the specified id for **the current date menu**.
+The menu item description should be provided in the body of the request in JSON format. 
 Access Level: Admin
 
 *Example:*
 ```
 curl --basic -u admin@gmail.com:admin -i -H 'Content-Type:application/json' \
--d '{"name":"Something new","price":17.25,"menuDate":"2020-01-15"}' \
+-d '{"name":"Something new","price":17.25}' \
 localhost:8080/rest/admin/restaurant/100002/menu
 ```
 ### Delete menu (all items) (current date)
@@ -297,11 +297,11 @@ Access level: User
 ```
 curl -i --basic -u user@yandex.ru:password localhost:8080/rest/menuItems/100010
 ```
-### Delete a menuitem 
+### Delete a menu item 
 ```
 DELETE /rest/admin/menuItems/{id}
 ```
-It deletes an menut item by its id. 
+It deletes an menu item by its id. 
 Access level: Admin
 
 *Example:*
@@ -335,7 +335,7 @@ Get your particular vote info | User | GET | /rest/vote/{id}
 
 ### Vote for the restaurant
 ```
-GET /rest/vote?restaurantId={id}
+POST /rest/vote?restaurantId={id}
 ```
 The call allows a user to vote for a restaurant by its it. Only one vote counted per user, but
 if the user votes again in the same day:
@@ -381,7 +381,7 @@ curl -i --basic -u user@yandex.ru:password localhost:8080/rest/vote/last
 ```
 GET /rest/vote/result?date={iso_date}
 ```
-The call returns voting results summary basically restaurants and number of votes against them.
+The call returns voting results summary - restaurants and number of votes against them.
 It takes date as an optional parameter, if specified it will return voting results for the date, if not it returns results
 for the current date.  
 Access level: User

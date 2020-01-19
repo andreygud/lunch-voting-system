@@ -51,7 +51,7 @@ public class VoteService {
                 vote.setVoteTime(LocalDateTime.now());
                 break;
             default:
-                throw new IllegalStateException("There are more than 1 vote per day in the database. Please contact your administrator.");
+                throw new IllegalStateException("There is more than 1 vote per day in the database. Please contact your administrator.");
         }
 
         Vote voteResult = checkNotFound(voteRepository.save(vote, userId, restaurantId),"Vote didn't go through. Please contact your administrator.");

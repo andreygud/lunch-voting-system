@@ -28,6 +28,6 @@ public class MenuItem extends AbstractNamedEntity {
     private double price;
 
     @Column(name = "menu_date")
-    private LocalDate menuDate;
+    private LocalDate menuDate = LocalDate.now();
 
 }

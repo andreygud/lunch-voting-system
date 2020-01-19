@@ -8,7 +8,6 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
-import java.time.LocalDate;
 
 @Getter @Setter
 @NoArgsConstructor
@@ -25,13 +24,9 @@ public class MenuItemTo extends BaseTo implements Serializable {
     @Digits(integer = 10, fraction = 2)
     private double price;
 
-    @NotNull
-    private LocalDate menuDate;
-
-    public MenuItemTo(Integer id, String name, double price, LocalDate menuDate) {
+    public MenuItemTo(Integer id, String name, double price) {
         super(id);
         this.name = name;
         this.price = price;
-        this.menuDate = menuDate;
     }
 }
