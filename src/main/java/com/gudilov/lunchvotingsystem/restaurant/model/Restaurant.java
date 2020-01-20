@@ -1,19 +1,28 @@
 package com.gudilov.lunchvotingsystem.restaurant.model;
 
 import com.gudilov.lunchvotingsystem.common.model.AbstractNamedEntity;
-import lombok.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
+import org.hibernate.annotations.Filter;
+import org.hibernate.annotations.FilterDef;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.validation.constraints.Size;
+import java.util.List;
+
+import static com.gudilov.lunchvotingsystem.restaurant.model.Restaurant.*;
 
 @Entity
 @Table(name = "restaurant")
 @Getter @Setter
 @NoArgsConstructor
 @ToString(callSuper = true)
-public class Restaurant extends AbstractNamedEntity{
+@FilterDef(name= CURRENT_DAY_FILTER)
+public class Restaurant extends AbstractNamedEntity {
+
+    public static final String CURRENT_DAY_FILTER = "currentDay";
 
     @Column(name = "description")
     @Size(max = 1000)
@@ -23,13 +32,14 @@ public class Restaurant extends AbstractNamedEntity{
     @Size(min = 5, max = 255)
     private String address;
 
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "restaurant")
+    @OrderBy("menuDate ASC")
+    @Filter(name=CURRENT_DAY_FILTER,condition = "menu_date = current_date()")
+    private List<MenuItem> todayItems;
+
     public Restaurant(Integer id, String name, String description, String address) {
         super(id, name);
         setDescription(description);
         setAddress(address);
-    }
-
-    public Restaurant(Restaurant u) {
-        this(u.getId(), u.getName(), u.getDescription(), u.getAddress());
     }
 }

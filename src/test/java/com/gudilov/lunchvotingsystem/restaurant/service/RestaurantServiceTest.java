@@ -1,6 +1,7 @@
 package com.gudilov.lunchvotingsystem.restaurant.service;
 
 import com.gudilov.lunchvotingsystem.restaurant.RestaurantTestData;
+import com.gudilov.lunchvotingsystem.restaurant.to.MenuItemViewTo;
 import com.gudilov.lunchvotingsystem.restaurant.to.RestaurantTo;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import static com.gudilov.lunchvotingsystem.common.utils.ValidationUtil.getRootCause;
+import static com.gudilov.lunchvotingsystem.restaurant.MenuItemTestData.*;
 import static com.gudilov.lunchvotingsystem.restaurant.RestaurantTestData.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -77,5 +79,11 @@ class RestaurantServiceTest {
     void getAll() {
         List<RestaurantTo> usersActual = restaurantService.getAll();
         assertEquals(List.of(RESTAURANT1_TO, RESTAURANT3_TO, RESTAURANT2_TO), usersActual);
+    }
+
+    @Test
+    void getAllItems_current_date() {
+        List<MenuItemViewTo> list = restaurantService.getCurretDayMenuItems(RESTAURANT1_ID);
+        assertEquals(List.of(CACTUS_ITEM1_BURGER_VIEW_TO, CACTUS_ITEM2_BURGER_VIEW_TO, CACTUS_ITEM3_BURGER_VIEW_TO), list);
     }
 }

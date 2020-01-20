@@ -1,8 +1,11 @@
 package com.gudilov.lunchvotingsystem.restaurant.service;
 
+import com.gudilov.lunchvotingsystem.restaurant.model.MenuItem;
 import com.gudilov.lunchvotingsystem.restaurant.model.Restaurant;
 import com.gudilov.lunchvotingsystem.restaurant.repository.restaurant.RestaurantRepository;
+import com.gudilov.lunchvotingsystem.restaurant.service.mapper.MenuItemsMapper;
 import com.gudilov.lunchvotingsystem.restaurant.service.mapper.RestaurantMapper;
+import com.gudilov.lunchvotingsystem.restaurant.to.MenuItemViewTo;
 import com.gudilov.lunchvotingsystem.restaurant.to.RestaurantTo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,10 +23,13 @@ public class RestaurantService {
 
     private RestaurantMapper restaurantMapper;
     private RestaurantRepository restaurantRepository;
+    private MenuItemsMapper menuItemMapper;
 
-    public RestaurantService(RestaurantMapper restaurantMapper, RestaurantRepository restaurantRepository) {
+
+    public RestaurantService(RestaurantMapper restaurantMapper, RestaurantRepository restaurantRepository, MenuItemsMapper menuItemMapper) {
         this.restaurantMapper = restaurantMapper;
         this.restaurantRepository = restaurantRepository;
+        this.menuItemMapper = menuItemMapper;
     }
 
     public RestaurantTo create(RestaurantTo restaurantTo) {
@@ -58,5 +64,12 @@ public class RestaurantService {
         log.debug("getAll");
         List<Restaurant> restaurants = restaurantRepository.getAll();
         return restaurantMapper.transformEntitiesIntoViewTos(restaurants);
+    }
+
+    public List<MenuItemViewTo> getCurretDayMenuItems(int restaurantId) {
+        log.debug("getAll menu items for current date");
+        Restaurant restaurant = checkNotFoundWithId(restaurantRepository.getWithItems(restaurantId),restaurantId);
+        List<MenuItem> items = restaurant.getTodayItems();
+        return menuItemMapper.transformEntitiesIntoViewTos(items);
     }
 }

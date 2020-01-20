@@ -37,7 +37,7 @@
 
         <!-- Hibernate -->
         <hibernate.version>5.4.7.Final</hibernate.version>
-        <hibernate-validator.version>6.0.17.Final</hibernate-validator.version>
+        <hibernate-validator.version>6.0.18.Final</hibernate-validator.version>
         <javax-el.version>3.0.1-b11</javax-el.version>
 
 
@@ -319,10 +319,13 @@
             <plugin>
                 <groupId>org.codehaus.cargo</groupId>
                 <artifactId>cargo-maven2-plugin</artifactId>
-                <version>1.7.7</version>
+                <version>1.7.9</version>
                 <configuration>
                     <container>
                         <containerId>tomcat9x</containerId>
+                        <zipUrlInstaller>
+                            <url>https://repo.maven.apache.org/maven2/org/apache/tomcat/tomcat/9.0.29/tomcat-9.0.29.zip</url>
+                        </zipUrlInstaller>
                         <systemProperties>
                             <file.encoding>UTF-8</file.encoding>
                         </systemProperties>

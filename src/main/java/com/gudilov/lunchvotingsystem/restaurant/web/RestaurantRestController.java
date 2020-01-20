@@ -1,7 +1,6 @@
 package com.gudilov.lunchvotingsystem.restaurant.web;
 
 import com.gudilov.lunchvotingsystem.restaurant.reports.ReportingRepository;
-import com.gudilov.lunchvotingsystem.restaurant.service.MenuItemService;
 import com.gudilov.lunchvotingsystem.restaurant.service.RestaurantService;
 import com.gudilov.lunchvotingsystem.restaurant.to.MenuItemHistoryTo;
 import com.gudilov.lunchvotingsystem.restaurant.to.MenuItemViewTo;
@@ -25,12 +24,10 @@ public class RestaurantRestController {
     static final String REST_URL = "/rest/restaurant";
 
     private RestaurantService restaurantService;
-    private MenuItemService menuItemService;
     private ReportingRepository reportingRepository;
 
-    public RestaurantRestController(RestaurantService restaurantService, MenuItemService menuItemService, ReportingRepository reportingRepository) {
+    public RestaurantRestController(RestaurantService restaurantService, ReportingRepository reportingRepository) {
         this.restaurantService = restaurantService;
-        this.menuItemService = menuItemService;
         this.reportingRepository = reportingRepository;
     }
 
@@ -49,7 +46,7 @@ public class RestaurantRestController {
     @GetMapping("/{id}/menu")
     public List<MenuItemViewTo> getTodayMenu(@PathVariable int id) {
         log.debug("rest get menu  restaurant id={}", id);
-        return menuItemService.getAllForToday(id);
+        return restaurantService.getCurretDayMenuItems(id);
     }
 
     @GetMapping("/menu_history")

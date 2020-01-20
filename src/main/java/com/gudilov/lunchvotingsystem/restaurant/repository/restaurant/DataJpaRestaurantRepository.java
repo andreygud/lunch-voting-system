@@ -1,10 +1,15 @@
 package com.gudilov.lunchvotingsystem.restaurant.repository.restaurant;
 
 import com.gudilov.lunchvotingsystem.restaurant.model.Restaurant;
+import org.hibernate.Session;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.EntityManager;
 import java.util.List;
+
+import static com.gudilov.lunchvotingsystem.restaurant.model.Restaurant.CURRENT_DAY_FILTER;
 
 @Repository
 public class DataJpaRestaurantRepository implements RestaurantRepository {
@@ -13,8 +18,11 @@ public class DataJpaRestaurantRepository implements RestaurantRepository {
 
     private CrudRestaurantRepository crudRepository;
 
-    public DataJpaRestaurantRepository(CrudRestaurantRepository crudRepository) {
+    private EntityManager entityManager;
+
+    public DataJpaRestaurantRepository(CrudRestaurantRepository crudRepository, EntityManager entityManager) {
         this.crudRepository = crudRepository;
+        this.entityManager = entityManager;
     }
 
     @Override
@@ -37,4 +45,11 @@ public class DataJpaRestaurantRepository implements RestaurantRepository {
         return crudRepository.findAll(SORT_NAME);
     }
 
+    @Override
+    @Transactional
+    public Restaurant getWithItems(int id) {
+        Session session = entityManager.unwrap(Session.class);
+        session.enableFilter(CURRENT_DAY_FILTER);
+        return crudRepository.getWithItems(id);
+    }
 }

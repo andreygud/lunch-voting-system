@@ -2,7 +2,6 @@ package com.gudilov.lunchvotingsystem.restaurant.web;
 
 import com.gudilov.lunchvotingsystem.common.exceptions.NotFoundException;
 import com.gudilov.lunchvotingsystem.common.web.AbstractControllerTest;
-import com.gudilov.lunchvotingsystem.restaurant.service.MenuItemService;
 import com.gudilov.lunchvotingsystem.restaurant.service.RestaurantService;
 import com.gudilov.lunchvotingsystem.restaurant.to.RestaurantTo;
 import org.junit.jupiter.api.Test;
@@ -21,9 +20,6 @@ class RestaurantAdminRestControllerTest extends AbstractControllerTest {
 
     @Autowired
     RestaurantService restaurantService;
-
-    @Autowired
-    MenuItemService itemService;
 
     public RestaurantAdminRestControllerTest() {
         super(RestaurantAdminRestController.REST_URL);
@@ -94,7 +90,7 @@ class RestaurantAdminRestControllerTest extends AbstractControllerTest {
                 .andDo(print())
                 .andExpect(status().isNoContent());
 
-        int after = itemService.getAllForToday(RESTAURANT1_ID).size();
+        int after = restaurantService.getCurretDayMenuItems(RESTAURANT1_ID).size();
 
         assertEquals(0, after);
     }

@@ -3,6 +3,7 @@ package com.gudilov.lunchvotingsystem.restaurant.web;
 import com.gudilov.lunchvotingsystem.common.web.AbstractControllerTest;
 import com.gudilov.lunchvotingsystem.restaurant.RestaurantTestData;
 import com.gudilov.lunchvotingsystem.restaurant.service.MenuItemService;
+import com.gudilov.lunchvotingsystem.restaurant.service.RestaurantService;
 import com.gudilov.lunchvotingsystem.restaurant.to.MenuItemViewTo;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,17 +19,20 @@ class MenuItemAdminRestControllerTest extends AbstractControllerTest {
     @Autowired
     MenuItemService menuItemService;
 
+    @Autowired
+    RestaurantService restaurantService;
+
     public MenuItemAdminRestControllerTest() {
         super(MenuItemAdminRestController.REST_URL);
     }
 
     @Test
     void delete() throws Exception {
-        int before = menuItemService.getAllForToday(RestaurantTestData.RESTAURANT1_ID).size();
+        int before = restaurantService.getCurretDayMenuItems(RestaurantTestData.RESTAURANT1_ID).size();
         perform(doDelete(CACTUS_ITEM1_BURGER_ID).basicAuth(ADMIN))
                 .andDo(print())
                 .andExpect(status().isNoContent());
-        int after = menuItemService.getAllForToday(RestaurantTestData.RESTAURANT1_ID).size();
+        int after = restaurantService.getCurretDayMenuItems(RestaurantTestData.RESTAURANT1_ID).size();
 
         assertEquals(before - 1, after);
     }

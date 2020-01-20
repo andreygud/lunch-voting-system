@@ -16,4 +16,8 @@ public interface RestaurantRepository {
     Restaurant get(int id);
 
     List<Restaurant> getAll();
+
+    // null if not found
+    Restaurant getWithItems(int id);
+
 }

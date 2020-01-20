@@ -9,8 +9,6 @@ import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.jdbc.SqlConfig;
 import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 
-import java.util.List;
-
 import static com.gudilov.lunchvotingsystem.restaurant.MenuItemTestData.*;
 import static com.gudilov.lunchvotingsystem.restaurant.RestaurantTestData.RESTAURANT1_ID;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -65,9 +63,5 @@ class MenuItemServiceTest {
         assertEquals(CACTUS_ITEM1_BURGER_VIEW_TO, item);
     }
 
-    @Test
-    void getAll() {
-        List<MenuItemViewTo> list = service.getAllForToday(RESTAURANT1_ID);
-        assertEquals(List.of(CACTUS_ITEM1_BURGER_VIEW_TO, CACTUS_ITEM2_BURGER_VIEW_TO, CACTUS_ITEM3_BURGER_VIEW_TO), list);
-    }
+
 }
