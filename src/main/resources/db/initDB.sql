@@ -35,6 +35,9 @@ CREATE TABLE restaurant
     address     VARCHAR(255)
 );
 
+CREATE INDEX restaurant_id_idx
+    ON restaurant (id);
+
 CREATE TABLE vote
 (
     id            INTEGER   DEFAULT global_seq.NEXTVAL PRIMARY KEY,
@@ -44,6 +47,8 @@ CREATE TABLE vote
     FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE,
     FOREIGN KEY (restaurant_id) REFERENCES restaurant (id) ON DELETE CASCADE
 );
+CREATE INDEX vote_user_id_vote_time_idx
+    ON vote (user_id,vote_time);
 
 CREATE TABLE menu_item
 (
@@ -54,3 +59,5 @@ CREATE TABLE menu_item
     menu_date     DATE    DEFAULT today,
     FOREIGN KEY (restaurant_id) REFERENCES restaurant (id) ON DELETE CASCADE
 );
+CREATE INDEX menu_item_restaurant_id_menu_date_idx
+    ON menu_item (restaurant_id,menu_date);
