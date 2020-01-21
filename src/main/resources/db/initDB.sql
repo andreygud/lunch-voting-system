@@ -49,6 +49,8 @@ CREATE TABLE vote
 );
 CREATE INDEX vote_user_id_vote_time_idx
     ON vote (user_id,vote_time);
+CREATE INDEX vote_id_idx
+    ON vote (id);
 
 CREATE TABLE menu_item
 (
@@ -61,3 +63,5 @@ CREATE TABLE menu_item
 );
 CREATE INDEX menu_item_restaurant_id_menu_date_idx
     ON menu_item (restaurant_id,menu_date);
+CREATE INDEX menu_item_id_idx
+    ON menu_item (id);
