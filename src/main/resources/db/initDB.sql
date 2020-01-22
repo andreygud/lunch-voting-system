@@ -44,11 +44,14 @@ CREATE TABLE vote
     user_id       INTEGER                 NOT NULL,
     restaurant_id INTEGER                 NOT NULL,
     vote_time     TIMESTAMP DEFAULT now() NOT NULL,
+    vote_date     VARCHAR AS TO_CHAR(vote_time, 'DD/MM/YYYY'),
     FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE,
     FOREIGN KEY (restaurant_id) REFERENCES restaurant (id) ON DELETE CASCADE
 );
 CREATE INDEX vote_user_id_vote_time_idx
     ON vote (user_id,vote_time);
+CREATE UNIQUE INDEX vote_one_per_day_idx
+    ON vote (user_id,vote_date);
 CREATE INDEX vote_id_idx
     ON vote (id);
 
@@ -61,7 +64,7 @@ CREATE TABLE menu_item
     menu_date     DATE    DEFAULT today,
     FOREIGN KEY (restaurant_id) REFERENCES restaurant (id) ON DELETE CASCADE
 );
-CREATE INDEX menu_item_restaurant_id_menu_date_idx
-    ON menu_item (restaurant_id,menu_date);
+CREATE UNIQUE INDEX unique_menu_item_restaurant_id_menu_date_idx
+    ON menu_item (restaurant_id,name,menu_date);
 CREATE INDEX menu_item_id_idx
     ON menu_item (id);

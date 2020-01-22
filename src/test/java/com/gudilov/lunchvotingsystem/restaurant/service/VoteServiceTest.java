@@ -7,6 +7,7 @@ import com.gudilov.lunchvotingsystem.restaurant.repository.vote.VoteRepository;
 import com.gudilov.lunchvotingsystem.restaurant.to.VoteViewTo;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.jdbc.SqlConfig;
 import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
@@ -63,9 +64,8 @@ class VoteServiceTest {
         shiftTime(DATE_TIME_BEFORE1100);
 
         Vote duplication = new Vote(LocalDateTime.now().minusMinutes(2));
-        voteRepository.save(duplication, ADMIN_ID, RESTAURANT1_ID);
 
-        assertThrows(IllegalStateException.class, () -> voteService.vote(ADMIN_ID, RESTAURANT3_ID));
+        assertThrows(DataIntegrityViolationException.class, () -> voteRepository.save(duplication, ADMIN_ID, RESTAURANT1_ID));
     }
 
     @Test
